@@ -2,11 +2,11 @@
 
 ## Integrantes
 
-- **Nome:** [Murilo Varize Lobato] — **RA:** [10752958]
+- **Nome:** Murilo Varize Lobato — **RA:** 10752958
 - 
 > Remova as linhas que não forem necessárias e coloque todos os integrantes do grupo.
 
-**GitHub:** [COLE AQUI O LINK DO REPOSITÓRIO]
+**GitHub:** https://github.com/FrankHutH/FraudShield.git
 
 ---
 
