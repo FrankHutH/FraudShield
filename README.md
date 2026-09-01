@@ -2,7 +2,7 @@
 
 ## Integrantes
 
-- **Nome:** Murilo Varize Lobato — **RA:** 10752958
+- **Nome:** Murilo Lobato — **RA:** 10752958
   
 
 **GitHub:** https://github.com/FrankHutH/FraudShield.git
