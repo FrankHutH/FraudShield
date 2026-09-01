@@ -67,13 +67,3 @@ Reúne orientações imediatas sobre o que fazer diante de uma possível tentati
 
 ![Wireframe da página de ajuda e contato](docs/wireframes/06-contato.png)
 
----
-
-## Interações previstas
-
-O protótipo já considera duas interações que poderão ser implementadas posteriormente com JavaScript:
-
-1. **Dicas expansíveis:** o usuário poderá clicar em uma dica para abrir ou fechar sua explicação.
-2. **Quiz interativo:** o usuário poderá responder perguntas sobre situações de golpe e receber um retorno sobre sua escolha.
-
-Nesta etapa, essas funcionalidades aparecem apenas no **wireframe**. Nenhum código funcional do site foi desenvolvido ainda.
