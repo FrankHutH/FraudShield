@@ -1,4 +1,4 @@
-# FraudShield SERÁ ADICIONADO MAIS FUNCIONALIDADES, VERSÃO ANTIGA.
+# FraudShield
 
 ## Integrantes
 
@@ -66,35 +66,3 @@ O quiz apresentará situações fictícias para que o usuário escolha a atitude
 Reúne orientações imediatas sobre o que fazer diante de uma possível tentativa de golpe e apresenta uma área de contato.
 
 ![Wireframe da página de ajuda e contato](docs/wireframes/06-contato.png)
-
----
-
-## Estrutura do projeto
-
-```text
-FraudShield/
-├── index.html            página inicial
-├── sobre.html             sobre o projeto
-├── golpes.html            tipos de golpes
-├── dicas.html             dicas de segurança
-├── quiz.html              quiz interativo
-├── css/                   um arquivo de estilo por página
-│   ├── index.css
-│   ├── sobre.css
-│   ├── golpes.css
-│   ├── dicas.css
-│   └── quiz.css
-├── img/                   imagens do site (logo e ilustrações)
-├── docs/
-│   └── wireframes/        wireframes do protótipo (01 a 06)
-└── README.md
-```
-
-O site é feito apenas com **HTML e CSS**, sem frameworks. Cada página `.html`
-carrega o seu próprio `.css` da pasta `css/`.
-
-## Como visualizar
-
-Abra o arquivo `index.html` no navegador, ou publique a pasta pelo **GitHub Pages**
-(Settings → Pages → Branch: `main` / `root`).
-
