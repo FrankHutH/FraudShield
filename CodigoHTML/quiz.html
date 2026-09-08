@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz | FraudShield</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+
+    <header class="cabecalho-principal">
+        <a href="home.html" class="logo-container">
+            <img src="img/logo.png" alt="Logo FraudShield" class="logo">
+
+            <section class="marca">
+                <h1>FraudShield</h1>
+            </section>
+        </a>
+
+        <nav class="menu-navegacao">
+            <a href="home.html">Home</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="golpes.html">Golpes</a>
+            <a href="dicas.html">Dicas</a>
+            <a href="quiz.html" class="ativo">Quiz</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="secao-sobre">
+            <article class="conteudo-sobre">
+                <h2>Quiz Interativo</h2>
+                <p>O Quiz do FraudShield é uma área de treinamento para aprender a reconhecer golpes digitais de forma prática.</p>
+                <p>Em vez de apenas perguntas de múltipla escolha, o treinamento é dividido em quatro mini jogos. Cada mini jogo trabalha uma situação comum ligada a golpes digitais.</p>
+                <p>O objetivo é aprender através da interação.</p>
+            </article>
+
+            <figure class="imagem-sobre">
+                <img src="img/seguranca.jpeg" alt="Ilustração sobre segurança digital">
+            </figure>
+        </section>
+
+        <section class="secao-beneficios">
+            <h2>Mini jogos do treinamento</h2>
+
+            <ol class="lista-beneficios">
+                <li class="item-beneficio">
+                    <h3>1. Golpe ou Seguro</h3>
+                    <p>Diferencie situações normais de situações com sinais de golpe.</p>
+                    <a class="botao" href="#jogo-golpe-ou-seguro">Jogar</a>
+                </li>
+
+                <li class="item-beneficio">
+                    <h3>2. Encontre os Sinais</h3>
+                    <p>Identifique os elementos suspeitos dentro de uma mensagem.</p>
+                    <a class="botao" href="#jogo-encontre-os-sinais">Jogar</a>
+                </li>
+
+                <li class="item-beneficio">
+                    <h3>3. O que Fazer Primeiro?</h3>
+                    <p>Escolha a primeira atitude correta diante de um golpe.</p>
+                    <a class="botao" href="#jogo-o-que-fazer-primeiro">Jogar</a>
+                </li>
+
+                <li class="item-beneficio">
+                    <h3>4. Conversa Suspeita</h3>
+                    <p>Analise um diálogo e decida se ele é confiável.</p>
+                    <a class="botao" href="#jogo-conversa-suspeita">Jogar</a>
+                </li>
+            </ol>
+        </section>
+
+        <section class="secao-beneficios">
+            <h2>Progresso do treinamento</h2>
+
+            <ul class="lista-beneficios">
+                <li class="item-beneficio">
+                    <p>Jogo 1 — Concluído</p>
+                </li>
+
+                <li class="item-beneficio">
+                    <p>Jogo 2 — Concluído</p>
+                </li>
+
+                <li class="item-beneficio">
+                    <p>Jogo 3 — Pendente</p>
+                </li>
+
+                <li class="item-beneficio">
+                    <p>Jogo 4 — Pendente</p>
+                </li>
+            </ul>
+
+            <p>
+                <progress value="50" max="100">50%</progress>
+                Progresso: 50%
+            </p>
+        </section>
+
+        <section class="secao-sobre" id="jogo-golpe-ou-seguro">
+            <article class="conteudo-sobre">
+                <h2>Mini jogo 1 — Golpe ou Seguro</h2>
+                <p>Objetivo: aprender a diferenciar situações normais de situações que apresentam sinais de golpe.</p>
+                <p>Como funciona: arraste cada cartão para a categoria que você considera correta. Ao terminar, o mini jogo é marcado como concluído.</p>
+            </article>
+
+            <section>
+                <h3>Situações para classificar</h3>
+
+                <ul class="lista-beneficios">
+                    <li class="item-beneficio" draggable="true">
+                        <p>Seu banco pediu sua senha por mensagem.</p>
+                    </li>
+
+                    <li class="item-beneficio" draggable="true">
+                        <p>Seu filho pediu PIX utilizando um número novo.</p>
+                    </li>
+
+                    <li class="item-beneficio" draggable="true">
+                        <p>Você abriu diretamente o aplicativo oficial do banco.</p>
+                    </li>
+
+                    <li class="item-beneficio" draggable="true">
+                        <p>Uma mensagem informou que sua conta será bloqueada caso você não clique em um link.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <section class="secao-beneficios">
+                <h3>Arraste os cartões para uma categoria</h3>
+
+                <ul class="lista-beneficios">
+                    <li class="item-beneficio">
+                        <h4>Golpe / Suspeito</h4>
+                        <p>Solte aqui as situações que apresentam sinais de golpe.</p>
+                    </li>
+
+                    <li class="item-beneficio">
+                        <h4>Seguro</h4>
+                        <p>Solte aqui as situações consideradas normais e confiáveis.</p>
+                    </li>
+                </ul>
+            </section>
+
+            <p>
+                <button type="button">Concluir mini jogo</button>
+            </p>
+        </section>
+    </main>
+
+    <footer class="rodape-principal">
+        <section class="info-empresa">
+            <img src="img/logo.png" alt="FraudShield" class="logo-rodape">
+        </section>
+    </footer>
+
+</body>
+</html>
