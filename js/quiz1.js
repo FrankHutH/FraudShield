@@ -330,100 +330,226 @@ var listaCartoesGolpe = document.getElementById("cartoesGolpe");
 var listaCartoesSeguro = document.getElementById("cartoesSeguro");
 var botaoClassificarGolpe = document.getElementById("botaoClassificarGolpe");
 var botaoClassificarSeguro = document.getElementById("botaoClassificarSeguro");
-var botaoConcluirJogo1 = document.getElementById("botaoConcluirJogo1");
+var botaoEncerrarJogo1 = document.getElementById("botaoEncerrarJogo1");
+var botaoProximaRodada = document.getElementById("botaoProximaRodada");
 var resultadoJogo1 = document.getElementById("resultadoJogo1");
+var progressoJogo1 = document.getElementById("progressoJogo1");
+
+var tamanhoRodada = 4;
+var proximaSituacao = situacoes.length;
+var situacoesDaRodada = [];
+var rodadaEmAndamento = false;
 
 var indiceCartaoSelecionado = -1;
 var indiceCartaoArrastado = -1;
 
-function escolherMensagemAleatoria(listaDeMensagens) {
-    var indiceAleatorio = Math.floor(Math.random() * listaDeMensagens.length);
-    return listaDeMensagens[indiceAleatorio];
+var numeroRodada = 0;
+var rodadasJogadas = 0;
+var acertosTotais = 0;
+var respostasTotais = 0;
+
+function embaralhar(lista) {
+    for (var i = lista.length - 1; i > 0; i = i - 1) {
+        var sorteado = Math.floor(Math.random() * (i + 1));
+        var valor = lista[i];
+        lista[i] = lista[sorteado];
+        lista[sorteado] = valor;
+    }
+}
+
+function calcularPorcentagem(parte, total) {
+    if (total === 0) {
+        return 0;
+    }
+    return Math.round((parte / total) * 100);
+}
+
+function escolherMensagemAleatoria(lista) {
+    var indice = Math.floor(Math.random() * lista.length);
+    return lista[indice];
 }
 
 function criarCartao(situacao, indice) {
-    var elementoCartao = document.createElement("li");
-    elementoCartao.className = "item-beneficio cartao-situacao";
-    elementoCartao.id = "cartaoSituacao" + indice;
-    elementoCartao.setAttribute("draggable", "true");
+    var cartao = document.createElement("li");
+    cartao.className = "item-beneficio cartao-situacao";
+    cartao.id = "cartaoSituacao" + indice;
+    cartao.setAttribute("draggable", "true");
 
-    var textoSituacao = document.createElement("p");
-    textoSituacao.textContent = situacao.texto;
+    var texto = document.createElement("p");
+    texto.textContent = situacao.texto;
 
-    var textoFeedback = document.createElement("p");
-    textoFeedback.className = "feedback-cartao";
+    var feedback = document.createElement("p");
+    feedback.className = "feedback-cartao";
 
-    elementoCartao.appendChild(textoSituacao);
-    elementoCartao.appendChild(textoFeedback);
+    cartao.appendChild(texto);
+    cartao.appendChild(feedback);
 
-    elementoCartao.addEventListener("click", function () {
+    cartao.addEventListener("click", function () {
         selecionarCartao(indice);
     });
 
-    elementoCartao.addEventListener("dragstart", function () {
+    cartao.addEventListener("dragstart", function () {
         indiceCartaoArrastado = indice;
     });
 
-    return elementoCartao;
+    return cartao;
 }
 
 function selecionarCartao(indice) {
-    var elementoCartao = document.getElementById("cartaoSituacao" + indice);
+    var cartao = document.getElementById("cartaoSituacao" + indice);
 
     if (indiceCartaoSelecionado === indice) {
-        elementoCartao.classList.remove("cartao-selecionado");
+        cartao.classList.remove("cartao-selecionado");
         indiceCartaoSelecionado = -1;
         return;
     }
 
     if (indiceCartaoSelecionado !== -1) {
-        var cartaoAnteriormenteSelecionado = document.getElementById("cartaoSituacao" + indiceCartaoSelecionado);
-        if (cartaoAnteriormenteSelecionado !== null) {
-            cartaoAnteriormenteSelecionado.classList.remove("cartao-selecionado");
+        var cartaoAntigo = document.getElementById("cartaoSituacao" + indiceCartaoSelecionado);
+        if (cartaoAntigo !== null) {
+            cartaoAntigo.classList.remove("cartao-selecionado");
         }
     }
 
-    elementoCartao.classList.add("cartao-selecionado");
+    cartao.classList.add("cartao-selecionado");
     indiceCartaoSelecionado = indice;
 }
 
 function classificarCartao(indiceSituacao, categoriaEscolhida) {
-    var situacaoAtual = situacoes[indiceSituacao];
-    situacaoAtual.classificacaoAtual = categoriaEscolhida;
+    if (rodadaEmAndamento === false) {
+        return;
+    }
 
-    var elementoCartao = document.getElementById("cartaoSituacao" + indiceSituacao);
+    var situacao = situacoes[indiceSituacao];
+    situacao.classificacaoAtual = categoriaEscolhida;
+
+    var cartao = document.getElementById("cartaoSituacao" + indiceSituacao);
 
     if (categoriaEscolhida === "golpe") {
-        listaCartoesGolpe.appendChild(elementoCartao);
+        listaCartoesGolpe.appendChild(cartao);
     }
     else {
-        listaCartoesSeguro.appendChild(elementoCartao);
+        listaCartoesSeguro.appendChild(cartao);
     }
 
-    elementoCartao.classList.remove("cartao-correto");
-    elementoCartao.classList.remove("cartao-incorreto");
-    elementoCartao.classList.remove("cartao-selecionado");
+    cartao.classList.remove("cartao-correto", "cartao-incorreto", "cartao-selecionado");
 
-    var textoFeedback = elementoCartao.querySelector(".feedback-cartao");
+    var feedback = cartao.querySelector(".feedback-cartao");
 
-    if (categoriaEscolhida === situacaoAtual.respostaCorreta) {
-        elementoCartao.classList.add("cartao-correto");
-        textoFeedback.textContent = "Correto — " + escolherMensagemAleatoria(mensagensAcerto);
+    if (categoriaEscolhida === situacao.respostaCorreta) {
+        cartao.classList.add("cartao-correto");
+        feedback.textContent = "Correto — " + escolherMensagemAleatoria(mensagensAcerto);
     }
     else {
-        elementoCartao.classList.add("cartao-incorreto");
-        textoFeedback.textContent = "Incorreto — " + escolherMensagemAleatoria(mensagensErro);
+        cartao.classList.add("cartao-incorreto");
+        feedback.textContent = "Incorreto — " + escolherMensagemAleatoria(mensagensErro);
     }
 
     indiceCartaoSelecionado = -1;
     indiceCartaoArrastado = -1;
+
+    verificarFimDaRodada();
 }
 
-function iniciarJogo1() {
-    situacoes.forEach(function (situacao, indice) {
-        var elementoCartao = criarCartao(situacao, indice);
-        listaCartoes.appendChild(elementoCartao);
-    });
+function contarClassificadosNaRodada() {
+    var total = 0;
+
+    for (var i = 0; i < situacoesDaRodada.length; i = i + 1) {
+        var situacao = situacoes[situacoesDaRodada[i]];
+        if (situacao.classificacaoAtual !== null) {
+            total = total + 1;
+        }
+    }
+
+    return total;
+}
+
+function contarAcertosNaRodada() {
+    var total = 0;
+
+    for (var i = 0; i < situacoesDaRodada.length; i = i + 1) {
+        var situacao = situacoes[situacoesDaRodada[i]];
+        if (situacao.classificacaoAtual === situacao.respostaCorreta) {
+            total = total + 1;
+        }
+    }
+
+    return total;
+}
+
+function mostrarProgresso(mensagem) {
+    var porcentagem = calcularPorcentagem(acertosTotais, respostasTotais);
+
+    progressoJogo1.textContent = mensagem + " Progresso: " + rodadasJogadas + " rodada(s) jogada(s), "
+        + acertosTotais + " de " + respostasTotais + " acertos (" + porcentagem + "%).";
+}
+
+function verificarFimDaRodada() {
+    if (contarClassificadosNaRodada() < tamanhoRodada) {
+        return;
+    }
+
+    var acertosDaRodada = contarAcertosNaRodada();
+
+    rodadaEmAndamento = false;
+    rodadasJogadas = rodadasJogadas + 1;
+    acertosTotais = acertosTotais + acertosDaRodada;
+    respostasTotais = respostasTotais + tamanhoRodada;
+
+    resultadoJogo1.textContent = "Rodada " + numeroRodada + " encerrada! Você acertou " + acertosDaRodada + " de " + tamanhoRodada + " situações.";
+    mostrarProgresso("Rodada concluída.");
+
+    localStorage.setItem("quiz1Concluido", "sim");
+
+    botaoEncerrarJogo1.hidden = false;
+    botaoProximaRodada.hidden = false;
+}
+
+function iniciarRodada() {
+    listaCartoes.textContent = "";
+    listaCartoesGolpe.textContent = "";
+    listaCartoesSeguro.textContent = "";
+    resultadoJogo1.textContent = "";
+    botaoEncerrarJogo1.hidden = true;
+    botaoProximaRodada.hidden = true;
+
+    indiceCartaoSelecionado = -1;
+    indiceCartaoArrastado = -1;
+    rodadaEmAndamento = true;
+    numeroRodada = numeroRodada + 1;
+
+    mostrarProgresso("Rodada " + numeroRodada + " em andamento — classifique os " + tamanhoRodada + " cartões abaixo.");
+
+    if (proximaSituacao + tamanhoRodada > situacoes.length) {
+        embaralhar(situacoes);
+        proximaSituacao = 0;
+    }
+
+    situacoesDaRodada = [];
+
+    for (var i = 0; i < tamanhoRodada; i = i + 1) {
+        var indiceSituacao = proximaSituacao + i;
+
+        situacoes[indiceSituacao].classificacaoAtual = null;
+        situacoesDaRodada.push(indiceSituacao);
+
+        var cartao = criarCartao(situacoes[indiceSituacao], indiceSituacao);
+        listaCartoes.appendChild(cartao);
+    }
+
+    proximaSituacao = proximaSituacao + tamanhoRodada;
+}
+
+function encerrarJogo1() {
+    botaoEncerrarJogo1.hidden = true;
+    botaoProximaRodada.hidden = true;
+
+    var porcentagem = calcularPorcentagem(acertosTotais, respostasTotais);
+
+    resultadoJogo1.textContent = "Jogo encerrado! Você jogou " + rodadasJogadas + " rodada(s) e acertou "
+        + acertosTotais + " de " + respostasTotais + " situações (" + porcentagem + "%).";
+
+    progressoJogo1.textContent = "";
 }
 
 botaoClassificarGolpe.addEventListener("click", function () {
@@ -466,32 +592,7 @@ areaSeguro.addEventListener("drop", function (evento) {
     }
 });
 
-botaoConcluirJogo1.addEventListener("click", function () {
-    var totalSituacoes = situacoes.length;
-    var totalClassificadas = 0;
+botaoProximaRodada.addEventListener("click", iniciarRodada);
+botaoEncerrarJogo1.addEventListener("click", encerrarJogo1);
 
-    for (var indice = 0; indice < totalSituacoes; indice = indice + 1) {
-        if (situacoes[indice].classificacaoAtual !== null) {
-            totalClassificadas = totalClassificadas + 1;
-        }
-    }
-
-    if (totalClassificadas < totalSituacoes) {
-        resultadoJogo1.textContent = "Classifique todos os cartões antes de concluir o mini jogo.";
-        return;
-    }
-
-    var totalCorretas = 0;
-
-    for (var indice = 0; indice < totalSituacoes; indice = indice + 1) {
-        if (situacoes[indice].classificacaoAtual === situacoes[indice].respostaCorreta) {
-            totalCorretas = totalCorretas + 1;
-        }
-    }
-
-    resultadoJogo1.textContent = "Você acertou " + totalCorretas + " de " + totalSituacoes + " situações.";
-
-    localStorage.setItem("quiz1Concluido", "sim");
-});
-
-iniciarJogo1();
+iniciarRodada();
