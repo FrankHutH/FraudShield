@@ -223,11 +223,33 @@ var mensagens = [
 
 var elementoMensagem = document.getElementById("mensagemJogo");
 var resultadoJogo2 = document.getElementById("resultadoJogo2");
+var progressoJogo2 = document.getElementById("progressoJogo2");
 var botaoVerificarJogo2 = document.getElementById("botaoVerificarJogo2");
 var botaoProximaMensagem = document.getElementById("botaoProximaMensagem");
+var botaoEncerrarJogo2 = document.getElementById("botaoEncerrarJogo2");
+var botaoProximaRodadaJogo2 = document.getElementById("botaoProximaRodadaJogo2");
+
+var tamanhoRodada = 4;
+var proximaMensagem = mensagens.length;
+var mensagensDaRodada = [];
+var posicaoNaRodada = 0;
 
 var indiceMensagemAtual = 0;
 var palavrasSelecionadas = [];
+
+var numeroRodada = 0;
+var rodadasJogadas = 0;
+var sinaisEncontradosTotais = 0;
+var sinaisPossiveisTotais = 0;
+
+function embaralhar(lista) {
+    for (var i = lista.length - 1; i > 0; i = i - 1) {
+        var sorteado = Math.floor(Math.random() * (i + 1));
+        var valor = lista[i];
+        lista[i] = lista[sorteado];
+        lista[sorteado] = valor;
+    }
+}
 
 function removerPontuacao(palavra) {
     var palavraSemPontuacao = palavra;
@@ -265,7 +287,14 @@ function alternarSelecaoPalavra(indicePalavra, elementoPalavra) {
     }
 }
 
+function mostrarProgresso(mensagem) {
+    progressoJogo2.textContent = mensagem + " Progresso: " + rodadasJogadas + " rodada(s) jogada(s), "
+        + sinaisEncontradosTotais + " de " + sinaisPossiveisTotais + " sinais encontrados.";
+}
+
 function carregarMensagem(indice) {
+    indiceMensagemAtual = indice;
+
     var mensagemAtual = mensagens[indice];
     var listaPalavras = mensagemAtual.texto.split(" ");
 
@@ -273,6 +302,8 @@ function carregarMensagem(indice) {
     elementoMensagem.textContent = "";
     resultadoJogo2.textContent = "";
     botaoProximaMensagem.disabled = true;
+
+    mostrarProgresso("Rodada " + numeroRodada + " — mensagem " + (posicaoNaRodada + 1) + " de " + tamanhoRodada + ".");
 
     listaPalavras.forEach(function (palavra, indicePalavra) {
         var elementoPalavra = document.createElement("span");
@@ -318,24 +349,71 @@ function verificarRespostasJogo2() {
 
     resultadoJogo2.textContent = "Você encontrou " + totalSinaisEncontrados + " de " + totalSinaisSuspeitos + " sinais de golpe.";
 
-    botaoProximaMensagem.disabled = false;
+    sinaisEncontradosTotais = sinaisEncontradosTotais + totalSinaisEncontrados;
+    sinaisPossiveisTotais = sinaisPossiveisTotais + totalSinaisSuspeitos;
 
-    if (indiceMensagemAtual === mensagens.length - 1) {
+    if (posicaoNaRodada === tamanhoRodada - 1) {
+        rodadasJogadas = rodadasJogadas + 1;
+
+        resultadoJogo2.textContent = "Rodada " + numeroRodada + " encerrada! " + resultadoJogo2.textContent;
+        mostrarProgresso("Rodada concluída.");
+
         localStorage.setItem("quiz2Concluido", "sim");
+
+        botaoVerificarJogo2.disabled = true;
+        botaoProximaMensagem.disabled = true;
+        botaoEncerrarJogo2.hidden = false;
+        botaoProximaRodadaJogo2.hidden = false;
     }
+    else {
+        botaoProximaMensagem.disabled = false;
+    }
+}
+
+function iniciarRodada() {
+    botaoEncerrarJogo2.hidden = true;
+    botaoProximaRodadaJogo2.hidden = true;
+    botaoVerificarJogo2.disabled = false;
+
+    numeroRodada = numeroRodada + 1;
+    posicaoNaRodada = 0;
+
+    if (proximaMensagem + tamanhoRodada > mensagens.length) {
+        embaralhar(mensagens);
+        proximaMensagem = 0;
+    }
+
+    mensagensDaRodada = [];
+
+    for (var i = 0; i < tamanhoRodada; i = i + 1) {
+        mensagensDaRodada.push(proximaMensagem + i);
+    }
+
+    proximaMensagem = proximaMensagem + tamanhoRodada;
+
+    carregarMensagem(mensagensDaRodada[posicaoNaRodada]);
+}
+
+function encerrarJogo2() {
+    botaoEncerrarJogo2.hidden = true;
+    botaoProximaRodadaJogo2.hidden = true;
+    botaoVerificarJogo2.disabled = true;
+    botaoProximaMensagem.disabled = true;
+
+    resultadoJogo2.textContent = "Jogo encerrado! Você jogou " + rodadasJogadas + " rodada(s) e encontrou "
+        + sinaisEncontradosTotais + " de " + sinaisPossiveisTotais + " sinais de golpe.";
+
+    progressoJogo2.textContent = "";
 }
 
 botaoVerificarJogo2.addEventListener("click", verificarRespostasJogo2);
 
 botaoProximaMensagem.addEventListener("click", function () {
-    if (indiceMensagemAtual < mensagens.length - 1) {
-        indiceMensagemAtual = indiceMensagemAtual + 1;
-    }
-    else {
-        indiceMensagemAtual = 0;
-    }
-
-    carregarMensagem(indiceMensagemAtual);
+    posicaoNaRodada = posicaoNaRodada + 1;
+    carregarMensagem(mensagensDaRodada[posicaoNaRodada]);
 });
 
-carregarMensagem(indiceMensagemAtual);
+botaoProximaRodadaJogo2.addEventListener("click", iniciarRodada);
+botaoEncerrarJogo2.addEventListener("click", encerrarJogo2);
+
+iniciarRodada();
