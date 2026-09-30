@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Jogo: decida se cada situação é golpe ou atitude segura.">
+        <meta name="theme-color" content="#0b1b3f">
+
+        <title>Golpe ou seguro? | FraudShield</title>
+        <link rel="icon" href="../img/favicon.png">
+        <link rel="stylesheet" href="../css/quiz1.css">
+
+        <script src="../js/tema.js"></script>
+        <script src="../js/dados/situacoes.js" defer></script>
+        <script src="../js/dados/feedback.js" defer></script>
+        <script src="../js/progresso.js" defer></script>
+        <script src="../js/feedback.js" defer></script>
+        <script src="../js/quiz1.js" defer></script>
+    </head>
+
+    <body>
+        <header class="cabecalho-principal">
+            <a class="marca" href="index.html" aria-label="FraudShield — início"><img src="../img/logo.png" alt=""><span>Fraud<b>Shield</b></span></a>
+
+            <nav class="menu-navegacao" aria-label="Navegação principal">
+                <a href="index.html">Início</a>
+                <a href="golpes.html">Golpes</a>
+                <a href="dicas.html">Dicas</a>
+                <a href="quiz.html" aria-current="page" class="ativo">Jogar</a>
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+
+            <button class="alternar-tema" id="alternarTema" type="button" aria-pressed="false">☾ Escuro</button>
+        </header>
+
+        <main>
+            <a class="voltar" href="quiz.html">← Voltar aos jogos</a>
+
+            <header class="introducao">
+                <p class="etiqueta">Fase 1</p>
+                <h1>Golpe ou seguro?</h1>
+                <p>Toque numa situação e escolha a caixa certa. Também dá para arrastar o cartão até a caixa.</p>
+            </header>
+
+            <section class="placar-jogo" aria-label="Placar">
+                <p id="progressoJogo1" role="status"></p>
+                <p class="placar" id="placarJogo1">Pontos nesta sessão: 0</p>
+            </section>
+
+            <section aria-labelledby="situacoes">
+                <h2 id="situacoes" tabindex="-1">Situações</h2>
+                <ul class="cartoes" id="listaCartoes"></ul>
+            </section>
+
+            <section class="cartoes categorias" aria-label="Caixas de resposta">
+                <article class="categoria golpe" id="areaGolpe">
+                    <h2>✕ Golpe</h2>
+                    <p>Tem algo errado aqui.</p>
+                    <button class="botao secundario" type="button" id="botaoClassificarGolpe" disabled>É golpe</button>
+                    <ul class="lista-classificados" id="cartoesGolpe"></ul>
+                </article>
+
+                <article class="categoria seguro" id="areaSeguro">
+                    <h2>✓ Seguro</h2>
+                    <p>Isso protege você.</p>
+                    <button class="botao secundario" type="button" id="botaoClassificarSeguro" disabled>É seguro</button>
+                    <ul class="lista-classificados" id="cartoesSeguro"></ul>
+                </article>
+            </section>
+
+            <p id="resultadoJogo1" class="resultado" role="status" aria-atomic="true" tabindex="-1"></p>
+
+            <p class="acoes">
+                <button class="botao" id="botaoProximaRodada" type="button" hidden>Próxima rodada</button>
+                <button class="botao secundario" id="botaoEncerrarJogo1" type="button" hidden>Parar por aqui</button>
+            </p>
+
+            <p class="aviso">Os exemplos são para treino. Uma atitude segura diminui o risco, mas não garante que todo contato seja legítimo.</p>
+        </main>
+
+        <footer class="rodape-principal">
+            <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
+
+            <nav aria-label="Links do rodapé">
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+        </footer>
+    </body>
+</html>
