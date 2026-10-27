@@ -1,5 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
+import Card from "../components/Card";
 
 export const metadata = {
   title: "FraudShield",
