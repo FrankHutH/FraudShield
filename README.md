@@ -26,9 +26,26 @@ Os golpes agora usam voz clonada, imagens falsas e mensagens feitas por IA, e as
 - Gratuito, roda offline/local, pode ser usado em oficina, telecentro, biblioteca.
 - Ensina atitude prática (confirmar por outro canal, não repassar senha), não teoria.
 
-## Como abrir
+## Como rodar (Check-in 2 — Next.js)
 
-Abra `html/index.html` no navegador. Sem instalar, sem compilar, sem servidor.
+Pré-requisito: Node.js 20.9 ou superior.
+
+```bash
+npm install
+npm run dev
+```
+
+Abra http://localhost:3000 para acessar a **página inicial migrada para Next.js**.
+
+As outras páginas e jogos do Projeto 1 continuam disponíveis temporariamente em `/html/*.html`, a partir do menu do site. A cópia dos arquivos legados em `public/` permite que CSS, JavaScript e imagens continuem funcionando durante a migração. O site original permanece guardado em `html/`, `css/`, `js/` e `img/`.
+
+Para gerar a versão de produção:
+
+```bash
+npm run build
+npm run start
+```
+
 
 ## Os jogos
 
@@ -72,6 +89,18 @@ js/contato.js    formulário de demonstração
 wireframes/      wireframes de cada página (SVG)
 docs/            imagens usadas neste README
 ```
+
+## Check-in 2 — estrutura inicial em Next.js
+
+O projeto agora inclui `app/layout.jsx` (documento base, metadados e carregamento do CSS global), `app/page.jsx` (HTML semântico da página inicial convertido para JSX), `styles/globals.css` (estilos gerais migrados de `css/index.css`) e `public/` (arquivos estáticos e páginas legadas do Projeto 1).
+
+A página inicial preserva cabeçalho, navegação, mensagem de prevenção, cartões com regras, convite aos jogos, rodapé e identidade visual 8-bit. Os caminhos relativos do HTML foram adaptados para a raiz `/`, para as imagens de `/img/` e para as páginas existentes de `/html/`. O script original de tema é mantido temporariamente para não perder o recurso durante a migração.
+
+**Por que migrar:** o JSX permite integrar a interface ao React e, no próximo check-in, extrair elementos repetidos para componentes reutilizáveis. Nesta etapa ainda não foram criados componentes de interface independentes, hooks React, rotas dinâmicas nem API — esses itens pertencem aos próximos check-ins.
+
+**Exemplos para apresentação:** em `app/layout.jsx`, a importação de `../styles/globals.css` disponibiliza os estilos gerais a partir do layout raiz. Em `app/page.jsx`, `className` substitui `class` nas marcações para que o HTML seja interpretado como JSX. Em `public/`, os recursos podem ser requisitados a partir de `/img/logo.png` e `/html/quiz.html`.
+
+**Uso de IA:** o ChatGPT (OpenAI) auxiliou especificamente na leitura dos requisitos do Projeto 2, na adaptação inicial do HTML/CSS para Next.js, na preservação das páginas legadas e na atualização do tutorial. A implementação deve ser revisada, testada e compreendida integralmente pelo integrante antes da apresentação.
 
 ## Tutorial do código
 
