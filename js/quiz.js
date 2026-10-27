@@ -1,3 +1,5 @@
+// Murilo Lobato - RA: 10752958
+
 function atualizarJogo(jogo) {
     const concluido = jogoConcluido(jogo);
     const status = concluido ? "concluída ✓" : "não concluída";

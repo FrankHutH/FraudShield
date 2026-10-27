@@ -1,3 +1,5 @@
+// Murilo Lobato - RA: 10752958
+
 const listaCartoes = document.getElementById("listaCartoes");
 const cartoesGolpe = document.getElementById("cartoesGolpe");
 const cartoesSeguro = document.getElementById("cartoesSeguro");

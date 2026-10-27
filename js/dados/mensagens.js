@@ -1,3 +1,5 @@
+// Murilo Lobato - RA: 10752958
+
 const bancoMensagens = [
     {
         texto: "URGENTE! Sua conta será bloqueada hoje. Clique neste link para confirmar sua senha.",
