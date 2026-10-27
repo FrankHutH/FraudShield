@@ -1,8 +1,8 @@
 // Murilo Lobato - RA: 10752958
 
-import ThemeToggle from "../../components/ThemeToggle";
 import LegacyScripts from "../../components/LegacyScripts";
 import "../../styles/pages/quiz.css";
+import Card from "../../components/Card";
 
 export const metadata = {
   title: "Jogar | FraudShield",
@@ -12,41 +12,26 @@ export const metadata = {
 export default function Page() {
   return (
     <>
-      <header className="cabecalho-principal">
-                  <a className="marca" href="/" aria-label="FraudShield — início"><img src="/img/logo.png" alt="" /><span>Fraud<b>Shield</b></span></a>
-
-                  <nav className="menu-navegacao" aria-label="Navegação principal">
-                      <a href="/">Início</a>
-                      <a href="/golpes">Golpes</a>
-                      <a href="/dicas">Dicas</a>
-                      <a href="/quiz" aria-current="page" className="ativo">Jogar</a>
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato">Contato</a>
-                  </nav>
-
-                  <ThemeToggle />
-              </header>
-
-              <main>
+<main>
                   <header className="introducao">
                       <h1>Escolha um jogo</h1>
                       <p>Sem cronômetro e sem cadastro. Errar aqui é de graça — é justamente pra isso que serve.</p>
                   </header>
 
                   <ol className="cartoes secao">
-                      <li className="cartao">
+                      <Card>
                           <p className="etiqueta">Fase 1</p>
                           <h2>Golpe ou seguro?</h2>
                           <p>Leia cada situação e decida: é golpe ou é uma atitude segura?</p>
                           <a className="botao" href="/quiz1">▶ Jogar</a>
-                      </li>
+                      </Card>
 
-                      <li className="cartao">
+                      <Card>
                           <p className="etiqueta">Fase 2</p>
                           <h2>Encontre os sinais</h2>
                           <p>Toque nas palavras da mensagem que deveriam acender o alerta.</p>
                           <a className="botao" href="/quiz2">▶ Jogar</a>
-                      </li>
+                      </Card>
                   </ol>
 
                   <section className="painel placar-geral" aria-labelledby="titulo-placar">
@@ -67,15 +52,7 @@ export default function Page() {
                   </section>
               </main>
 
-              <footer className="rodape-principal">
-                  <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
-
-                  <nav aria-label="Links do rodapé">
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato">Contato</a>
-                  </nav>
-              </footer>
-      <LegacyScripts scripts={["/js/progresso.js","/js/quiz.js"]} />
+<LegacyScripts scripts={["/js/progresso.js","/js/quiz.js"]} />
     </>
   );
 }

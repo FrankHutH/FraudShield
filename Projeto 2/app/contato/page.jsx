@@ -1,6 +1,5 @@
 // Murilo Lobato - RA: 10752958
 
-import ThemeToggle from "../../components/ThemeToggle";
 import LegacyScripts from "../../components/LegacyScripts";
 import "../../styles/pages/contato.css";
 
@@ -12,22 +11,7 @@ export const metadata = {
 export default function Page() {
   return (
     <>
-      <header className="cabecalho-principal">
-                  <a className="marca" href="/" aria-label="FraudShield — início"><img src="/img/logo.png" alt="" /><span>Fraud<b>Shield</b></span></a>
-
-                  <nav className="menu-navegacao" aria-label="Navegação principal">
-                      <a href="/">Início</a>
-                      <a href="/golpes">Golpes</a>
-                      <a href="/dicas">Dicas</a>
-                      <a href="/quiz">Jogar</a>
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato" aria-current="page" className="ativo">Contato</a>
-                  </nav>
-
-                  <ThemeToggle />
-              </header>
-
-              <main>
+<main>
                   <header className="introducao">
                       <h1>Fale com a gente</h1>
                       <p>Viu um golpe que não está aqui? Tem uma sugestão? Escreva.</p>
@@ -73,15 +57,7 @@ export default function Page() {
                   </section>
               </main>
 
-              <footer className="rodape-principal">
-                  <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
-
-                  <nav aria-label="Links do rodapé">
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato">Contato</a>
-                  </nav>
-              </footer>
-      <LegacyScripts scripts={["/js/contato.js"]} />
+<LegacyScripts scripts={["/js/contato.js"]} />
     </>
   );
 }
