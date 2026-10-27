@@ -1,3 +1,5 @@
+/* Murilo Lobato - RA: 10752958 */
+
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 :root {
@@ -15,7 +17,7 @@
 
     --pixel: "Press Start 2P", "Courier New", monospace;
 
-    /* Isso faz parecer igual os jogos antigos, "comendo" as bordas (la ele) */
+    
     --caixa: 0 -4px var(--borda), 0 4px var(--borda), -4px 0 var(--borda), 4px 0 var(--borda);
 }
 

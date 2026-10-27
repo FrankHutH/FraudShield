@@ -1,3 +1,5 @@
+// Murilo Lobato - RA: 10752958
+
 function criarElemento(tag, classe, texto) {
     const elemento = document.createElement(tag);
 

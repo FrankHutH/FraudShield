@@ -1,3 +1,5 @@
+// Murilo Lobato - RA: 10752958
+
 const sistemaEscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
 let tema = localStorage.getItem("tema") || (sistemaEscuro ? "escuro" : "claro");
 

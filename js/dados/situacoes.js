@@ -1,3 +1,5 @@
+// Murilo Lobato - RA: 10752958
+
 const bancoSituacoes = [
     {
         texto: "Seu banco pediu sua senha por mensagem.",
