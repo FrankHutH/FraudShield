@@ -1,6 +1,8 @@
 // Murilo Lobato - RA: 10752958
 
 import "../styles/globals.css";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export const metadata = {
   title: "FraudShield",
@@ -13,7 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body>
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
