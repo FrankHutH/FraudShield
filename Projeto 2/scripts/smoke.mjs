@@ -1,11 +1,8 @@
 // Murilo Lobato - RA: 10752958
 
 import { spawn } from "node:child_process";
-import { createRequire } from "node:module";
 import { setTimeout as pause } from "node:timers/promises";
 
-const require = createRequire(import.meta.url);
-const executable = require.resolve("next/dist/bin/next");
 const host = "http://127.0.0.1:3125";
 const routes = [
   ["/", "Golpe não bate na porta", 4],
@@ -18,7 +15,7 @@ const routes = [
   ["/contato", "Fale com a gente", 0]
 ];
 
-const server = spawn(process.execPath, [executable, "start", "--port", "3125"], {
+const server = spawn(process.execPath, ["scripts/serve-static.mjs", "3125"], {
   cwd: process.cwd(),
   env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1" },
   stdio: ["ignore", "pipe", "pipe"]
@@ -32,7 +29,7 @@ try {
   let ready = false;
 
   for (let attempt = 0; attempt < 40; attempt++) {
-    if (server.exitCode !== null) throw new Error("Next.js encerrou inesperadamente.");
+    if (server.exitCode !== null) throw new Error("Servidor estático encerrou inesperadamente.");
     try {
       const response = await fetch(host + "/");
       if (response.ok) {
@@ -43,7 +40,7 @@ try {
     await pause(500);
   }
 
-  if (!ready) throw new Error("Servidor Next.js não iniciou.");
+  if (!ready) throw new Error("Servidor da exportação estática não iniciou.");
 
   for (const [route, title, cards] of routes) {
     const response = await fetch(host + route);
