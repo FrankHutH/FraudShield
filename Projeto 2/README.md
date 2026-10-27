@@ -46,6 +46,7 @@ Para testar a compilação de produção:
 
 ```bash
 npm run build
+npm run test:smoke
 npm run start
 ```
 
@@ -155,3 +156,23 @@ O ChatGPT (OpenAI) foi utilizado como apoio para adaptar o HTML/CSS, organizar o
 - A navegação destaca a seção ativa a partir da URL usando `usePathname`.
 - O site mantém foco em acessibilidade e linguagem simples para o público idoso.
 - Os scripts dos jogos foram preservados nesta etapa para evitar antecipar a migração completa da lógica.
+
+
+## Hospedagem na AWS Amplify (Check-in 2)
+
+A aplicação usa exportação estática do Next.js por meio de `next.config.mjs` (`output: "export"` e `trailingSlash: true`). A compilação produz `Projeto 2/out/`, contendo o HTML das oito rotas, CSS, JavaScript, fontes e imagens necessários para disponibilizar o site sem servidor Node.js.
+
+O arquivo `amplify.yml`, na **raiz do repositório**, configura o monorepo com `appRoot: 'Projeto 2'`, executa `npm install`, `npm run build` e `npm run test:smoke`, e publica `out/`. No assistente AWS Amplify, selecione a branch `main`, diretório raiz **Projeto 2** e diretório de saída **out**. Não use a URL do GitHub nem o caminho codificado `Projeto%202` nesses campos.
+
+Comandos locais, executados em `Projeto 2/`:
+
+```bash
+npm install
+npm run build
+npm run test:smoke
+npm run start
+```
+
+Após executar `npm run start`, o site exportado pode ser acessado em `http://localhost:3000`. Para desenvolvimento, continue utilizando `npm run dev`.
+
+**Limite desta publicação:** o site funciona com arquivos estáticos e scripts executados no navegador. Uma API interna de Next.js ou renderização no servidor, previstas para etapas futuras, exigirá remover `output: "export"` e reconfigurar a hospedagem.

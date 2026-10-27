@@ -1,6 +1,8 @@
+// Murilo Lobato - RA: 10752958
+
 const nextConfig = {
   output: "export",
-  trailingSlash: true,
+  trailingSlash: true
 };
 
 export default nextConfig;
