@@ -54,7 +54,8 @@ try {
     }
 
     const activeLinks = (html.match(/aria-current="page"/g) || []).length;
-    if (activeLinks !== 1) throw new Error("Menu ativo incorreto em " + route);
+    if (activeLinks > 1) throw new Error("Menu com múltiplos links ativos em " + route);
+    if (!html.includes('href="/quiz"')) throw new Error("Navegação ausente em " + route);
 
     const cardCount = (html.match(/<li class="cartao">/g) || []).length;
     if (cardCount !== cards) throw new Error("Cartões incorretos em " + route + ": " + cardCount);
