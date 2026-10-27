@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/logo.png" alt="Logo do FraudShield" width="160">
+  <img src="Projeto%201/docs/logo.png" alt="Logo do FraudShield" width="160">
 </p>
 
 <h1 align="center">FraudShield</h1>
@@ -12,8 +12,8 @@
 ---
 
 <p align="center">
-  <img src="docs/inicio.jpg" alt="Página inicial do FraudShield no tema claro" width="49%">
-  <img src="docs/jogo.jpg" alt="Jogo Golpe ou seguro? no tema escuro" width="49%">
+  <img src="Projeto%201/docs/inicio.jpg" alt="Página inicial do FraudShield no tema claro" width="49%">
+  <img src="Projeto%201/docs/jogo.jpg" alt="Jogo Golpe ou seguro? no tema escuro" width="49%">
 </p>
 
 ## Ideação
@@ -26,7 +26,7 @@ Os golpes agora usam voz clonada, imagens falsas e mensagens feitas por IA, e as
 - Gratuito, roda offline/local, pode ser usado em oficina, telecentro, biblioteca.
 - Ensina atitude prática (confirmar por outro canal, não repassar senha), não teoria.
 
-## Como rodar (Check-in 2 — Next.js)
+## Como rodar no Next.js
 
 Pré-requisito: Node.js 20.9 ou superior.
 
@@ -35,11 +35,10 @@ npm install
 npm run dev
 ```
 
-Abra http://localhost:3000 para acessar a **página inicial migrada para Next.js**.
+Abra http://localhost:3000. **Todas as oito páginas** são renderizadas por rotas Next.js:
+`/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2` e `/contato`.
 
-As outras páginas e jogos do Projeto 1 continuam disponíveis temporariamente em `/html/*.html`, a partir do menu do site. A cópia dos arquivos legados em `public/` permite que CSS, JavaScript e imagens continuem funcionando durante a migração. O site original permanece guardado em `html/`, `css/`, `js/` e `img/`.
-
-Para gerar a versão de produção:
+Para testar a compilação de produção:
 
 ```bash
 npm run build
@@ -60,51 +59,51 @@ Cada acerto vale 10 pontos. O placar e o recorde ficam salvos no navegador.
 
 | Início | Sobre | Golpes |
 |---|---|---|
-| ![Início](wireframes/index.svg) | ![Sobre](wireframes/sobre.svg) | ![Golpes](wireframes/golpes.svg) |
+| ![Início](Projeto%201/wireframes/index.svg) | ![Sobre](Projeto%201/wireframes/sobre.svg) | ![Golpes](Projeto%201/wireframes/golpes.svg) |
 
 | Dicas | Quadro | Quiz |
 |---|---|---|
-| ![Dicas](wireframes/dicas.svg) | ![Quadro](wireframes/quadro.svg) | ![Quiz](wireframes/quiz.svg) |
+| ![Dicas](Projeto%201/wireframes/dicas.svg) | ![Quadro](Projeto%201/wireframes/quadro.svg) | ![Quiz](Projeto%201/wireframes/quiz.svg) |
 
 | Quiz 1 | Quiz 2 | Contato |
 |---|---|---|
-| ![Quiz 1](wireframes/quiz1.svg) | ![Quiz 2](wireframes/quiz2.svg) | ![Contato](wireframes/contato.svg) |
+| ![Quiz 1](Projeto%201/wireframes/quiz1.svg) | ![Quiz 2](Projeto%201/wireframes/quiz2.svg) | ![Contato](Projeto%201/wireframes/contato.svg) |
 
 Fixou cedo: cabeçalho + menu, hero texto/imagem, 4 cartões de destaque, rodapé simples.
 
-## Estrutura
+## Estrutura atual e migração do Projeto 1
 
 ```
-html/            8 páginas, HTML semântico, sem <div>
-css/             1 arquivo por página (mesmo nome do html)
-img/             logo.png (48px, ampliada em pixel art) e favicon.png
-js/tema.js       modo claro/escuro
-js/progresso.js  pontos, recorde e conclusão (localStorage)
-js/feedback.js   helpers de UI (criar elemento, mostrar resultado)
-js/quiz.js       progresso na página de treino
-js/quiz1.js      Jogo 1 — Golpe ou seguro?
-js/quiz2.js      Jogo 2 — Encontre os sinais
-js/dados/        conteúdo dos jogos (situações, mensagens, feedback)
-js/contato.js    formulário de demonstração
-wireframes/      wireframes de cada página (SVG)
-docs/            imagens usadas neste README
+app/                 oito rotas Next.js, cada uma com page.jsx
+components/          ThemeToggle.jsx e LegacyScripts.jsx
+styles/globals.css   estilos gerais da página inicial
+styles/pages/        CSS migrado das outras sete páginas
+public/img/          logo e favicon acessíveis pelo navegador
+public/js/           lógica original dos jogos (integração temporária)
+Projeto 1/           cópia integral da primeira versão do projeto
+  html/              oito páginas HTML originais
+  css/               oito arquivos CSS originais
+  js/                scripts originais
+  img/               imagens originais
+  wireframes/        protótipos originais
+  docs/              ilustrações para o README
+  README.md          tutorial original do Projeto 1
 ```
 
-## Check-in 2 — estrutura inicial em Next.js
+**Migração das oito páginas:** as antigas marcações HTML foram convertidas para JSX em `app/`; links como `quiz.html` tornaram-se `/quiz`, `class` tornou-se `className` e os atributos de formulários foram adaptados ao React. O CSS de cada página foi mantido em `styles/pages/`, além do CSS geral. Não há Tailwind ou CSS-in-JS.
 
-O projeto agora inclui `app/layout.jsx` (documento base, metadados e carregamento do CSS global), `app/page.jsx` (HTML semântico da página inicial convertido para JSX), `styles/globals.css` (estilos gerais migrados de `css/index.css`) e `public/` (arquivos estáticos e páginas legadas do Projeto 1).
+**Interatividade durante a migração:** o alternador de tema usa um pequeno componente cliente; os jogos e o formulário ainda carregam a lógica JavaScript original em ordem pelo `LegacyScripts`. Isso mantém o comportamento do Projeto 1 até a migração da lógica para componentes e hooks React. A rota de API e as rotas dinâmicas ainda não foram implementadas.
 
-A página inicial preserva cabeçalho, navegação, mensagem de prevenção, cartões com regras, convite aos jogos, rodapé e identidade visual 8-bit. Os caminhos relativos do HTML foram adaptados para a raiz `/`, para as imagens de `/img/` e para as páginas existentes de `/html/`. O script original de tema é mantido temporariamente para não perder o recurso durante a migração.
+**Arquivos originais:** toda a versão anterior está preservada em `Projeto 1/`. A pasta pode ser aberta diretamente para estudar ou comparar com as páginas em Next.js.
 
-**Por que migrar:** o JSX permite integrar a interface ao React e, no próximo check-in, extrair elementos repetidos para componentes reutilizáveis. Nesta etapa ainda não foram criados componentes de interface independentes, hooks React, rotas dinâmicas nem API — esses itens pertencem aos próximos check-ins.
+**Uso de IA:** o ChatGPT (OpenAI) ajudou a converter as oito páginas HTML para JSX, adaptar os CSS e os caminhos de navegação, preservar os scripts durante a migração e organizar o projeto anterior no diretório `Projeto 1/`. A autoria intelectual e o domínio do código devem ser assumidos pelo integrante na apresentação.
 
-**Exemplos para apresentação:** em `app/layout.jsx`, a importação de `../styles/globals.css` disponibiliza os estilos gerais a partir do layout raiz. Em `app/page.jsx`, `className` substitui `class` nas marcações para que o HTML seja interpretado como JSX. Em `public/`, os recursos podem ser requisitados a partir de `/img/logo.png` e `/html/quiz.html`.
-
-**Uso de IA:** o ChatGPT (OpenAI) auxiliou especificamente na leitura dos requisitos do Projeto 2, na adaptação inicial do HTML/CSS para Next.js, na preservação das páginas legadas e na atualização do tutorial. A implementação deve ser revisada, testada e compreendida integralmente pelo integrante antes da apresentação.
 
 ## Tutorial do código
 
-**HTML** — sem `<div>`; layout feito com `flex`/`grid` direto em tags semânticas (`section`, `ul`, `article`); `details`/`summary` nos golpes expansíveis; `progress` na barra do quiz.
+**Next.js e JSX** — toda navegação passa pelas oito rotas do diretório `app/`. O layout raiz carrega `styles/globals.css`; cada página adicional importa seu próprio CSS. `LegacyScripts` carrega os scripts dependentes em sequência depois da renderização.
+
+**HTML original** — sem `<div>`; layout feito com `flex`/`grid` direto em tags semânticas (`section`, `ul`, `article`); `details`/`summary` nos golpes expansíveis; `progress` na barra do quiz.
 
 **CSS** — cada página tem o seu arquivo, com o visual comum (cores, cabeçalho, botões, cartões) e só as partes que ela usa: as regras dos jogos ficam só em `quiz1.css` e `quiz2.css`, por exemplo. As cores saem da logo (azul-marinho + ciano) e ficam em `:root` e `:root[data-tema="escuro"]`; o resto usa `var(--cor)`.
 
