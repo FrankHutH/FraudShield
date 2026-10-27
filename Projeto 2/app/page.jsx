@@ -1,6 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
-import ThemeToggle from "../components/ThemeToggle";
+import Card from "../components/Card";
 
 export const metadata = {
   title: "FraudShield",
@@ -10,22 +10,7 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <header className="cabecalho-principal">
-                  <a className="marca" href="/" aria-label="FraudShield — início"><img src="/img/logo.png" alt="" /><span>Fraud<b>Shield</b></span></a>
-
-                  <nav className="menu-navegacao" aria-label="Navegação principal">
-                      <a href="/" aria-current="page" className="ativo">Início</a>
-                      <a href="/golpes">Golpes</a>
-                      <a href="/dicas">Dicas</a>
-                      <a href="/quiz">Jogar</a>
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato">Contato</a>
-                  </nav>
-
-                  <ThemeToggle />
-              </header>
-
-              <main>
+<main>
                   <section className="abertura" aria-labelledby="titulo-inicio">
                       <header>
                           <h1 id="titulo-inicio">Golpe não bate na porta. Chega pelo celular.</h1>
@@ -58,25 +43,25 @@ export default function Home() {
                       <h2 id="titulo-regras">Quatro regras antes de responder qualquer coisa</h2>
 
                       <ol className="cartoes numerada">
-                          <li className="cartao">
+                          <Card>
                               <h3>Sem pressa.</h3>
                               <p>Quem aplica golpe precisa que você decida agora. Você pode esperar.</p>
-                          </li>
+                          </Card>
 
-                          <li className="cartao">
+                          <Card>
                               <h3>Confirme por outro caminho.</h3>
                               <p>Ligue para um número que você já tinha salvo.</p>
-                          </li>
+                          </Card>
 
-                          <li className="cartao">
+                          <Card>
                               <h3>Código é só seu.</h3>
                               <p>Banco nenhum pede senha ou código de SMS por mensagem.</p>
-                          </li>
+                          </Card>
 
-                          <li className="cartao">
+                          <Card>
                               <h3>Pergunte a alguém.</h3>
                               <p>Mostrar a mensagem para outra pessoa já desarma muito golpe.</p>
-                          </li>
+                          </Card>
                       </ol>
                   </section>
 
@@ -90,14 +75,6 @@ export default function Home() {
                   </aside>
               </main>
 
-              <footer className="rodape-principal">
-                  <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
-
-                  <nav aria-label="Links do rodapé">
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato">Contato</a>
-                  </nav>
-              </footer>
-    </>
+</>
   );
 }

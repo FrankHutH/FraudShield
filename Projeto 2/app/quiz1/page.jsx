@@ -1,6 +1,5 @@
 // Murilo Lobato - RA: 10752958
 
-import ThemeToggle from "../../components/ThemeToggle";
 import LegacyScripts from "../../components/LegacyScripts";
 import "../../styles/pages/quiz1.css";
 
@@ -12,22 +11,7 @@ export const metadata = {
 export default function Page() {
   return (
     <>
-      <header className="cabecalho-principal">
-                  <a className="marca" href="/" aria-label="FraudShield — início"><img src="/img/logo.png" alt="" /><span>Fraud<b>Shield</b></span></a>
-
-                  <nav className="menu-navegacao" aria-label="Navegação principal">
-                      <a href="/">Início</a>
-                      <a href="/golpes">Golpes</a>
-                      <a href="/dicas">Dicas</a>
-                      <a href="/quiz" aria-current="page" className="ativo">Jogar</a>
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato">Contato</a>
-                  </nav>
-
-                  <ThemeToggle />
-              </header>
-
-              <main>
+<main>
                   <a className="voltar" href="/quiz">← Voltar aos jogos</a>
 
                   <header className="introducao">
@@ -72,15 +56,7 @@ export default function Page() {
                   <p className="aviso">Os exemplos são para treino. Uma atitude segura diminui o risco, mas não garante que todo contato seja legítimo.</p>
               </main>
 
-              <footer className="rodape-principal">
-                  <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
-
-                  <nav aria-label="Links do rodapé">
-                      <a href="/sobre">Sobre</a>
-                      <a href="/contato">Contato</a>
-                  </nav>
-              </footer>
-      <LegacyScripts scripts={["/js/dados/situacoes.js","/js/dados/feedback.js","/js/progresso.js","/js/feedback.js","/js/quiz1.js"]} />
+<LegacyScripts scripts={["/js/dados/situacoes.js","/js/dados/feedback.js","/js/progresso.js","/js/feedback.js","/js/quiz1.js"]} />
     </>
   );
 }

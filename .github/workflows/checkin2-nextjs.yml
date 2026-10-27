@@ -1,11 +1,11 @@
 # Murilo Lobato - RA: 10752958
-name: Check-in 2 - Build Next.js
+name: Projeto 2 - Next.js
 
 on:
-  push:
-    branches:
-      - feat/checkin-2-nextjs-20261027
   pull_request:
+    branches:
+      - main
+  push:
     branches:
       - main
 
@@ -15,6 +15,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "Projeto 2"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,3 +25,4 @@ jobs:
           node-version: "22"
       - run: npm install --no-audit --no-fund
       - run: npm run build
+      - run: npm run test:smoke
