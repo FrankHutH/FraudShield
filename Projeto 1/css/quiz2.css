@@ -1,0 +1,445 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+:root {
+    --fundo: #eef3fb;
+    --superficie: #ffffff;
+    --destaque: #dcf2ff;
+    --texto: #33415c;
+    --titulo: #0b1b3f;
+    --primaria: #0a5bd6;
+    --ciano: #19c3f0;
+    --borda: #0b1b3f;
+    --marinho: #0b1b3f;
+    --sombra: #b3c4e0;
+    --grade: rgba(11, 27, 63, 0.05);
+
+    --pixel: "Press Start 2P", "Courier New", monospace;
+
+    /* Isso faz parecer igual os jogos antigos, "comendo" as bordas (la ele) */
+    --caixa: 0 -4px var(--borda), 0 4px var(--borda), -4px 0 var(--borda), 4px 0 var(--borda);
+}
+
+:root[data-tema="escuro"] {
+    --fundo: #070f24;
+    --superficie: #0f1d3d;
+    --destaque: #13305c;
+    --texto: #c3d0ea;
+    --titulo: #f2f6ff;
+    --primaria: #4cc9ff;
+    --borda: #2d4a85;
+    --marinho: #030a1c;
+    --sombra: #000000;
+    --grade: rgba(76, 201, 255, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--texto);
+    background-color: var(--fundo);
+    background-image:
+        linear-gradient(var(--grade) 2px, transparent 2px),
+        linear-gradient(90deg, var(--grade) 2px, transparent 2px);
+    background-size: 32px 32px;
+}
+
+h1, h2, h3 {
+    margin: 0 0 20px;
+    color: var(--titulo);
+    font-family: var(--pixel);
+    font-weight: normal;
+    line-height: 1.45;
+}
+
+h1 {
+    font-size: 30px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+h1::after {
+    content: "_";
+    color: var(--ciano);
+    animation: piscar 1s steps(1) infinite;
+}
+
+@keyframes piscar {
+    50% {
+        opacity: 0;
+    }
+}
+
+p {
+    margin: 0 0 16px;
+}
+
+a {
+    color: var(--primaria);
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+img {
+    image-rendering: pixelated;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+.cabecalho-principal, .rodape-principal {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 28px;
+    padding: 14px 5%;
+    color: #c3d0ea;
+    background-color: var(--marinho);
+}
+
+.cabecalho-principal {
+    border-bottom: 4px solid var(--ciano);
+    box-shadow: 0 8px 0 var(--primaria);
+}
+
+.rodape-principal {
+    margin-top: 56px;
+    border-top: 4px solid var(--ciano);
+    font-size: 16px;
+}
+
+.rodape-principal p {
+    margin: 0;
+}
+
+.rodape-principal a {
+    color: #ffffff;
+    margin-right: 16px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    font-family: var(--pixel);
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.marca b {
+    font-weight: normal;
+    color: var(--ciano);
+}
+
+.marca img {
+    width: 48px;
+    height: 48px;
+}
+
+.menu-navegacao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-family: var(--pixel);
+    font-size: 11px;
+}
+
+.menu-navegacao a {
+    padding: 8px 10px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.menu-navegacao a:hover {
+    color: var(--ciano);
+}
+
+.menu-navegacao .ativo {
+    color: var(--marinho);
+    background-color: var(--ciano);
+}
+
+.menu-navegacao .ativo::before {
+    content: "▶ ";
+}
+
+.menu-navegacao .ativo:hover {
+    color: var(--marinho);
+}
+
+.alternar-tema {
+    padding: 8px 12px;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    background-color: transparent;
+    font-family: var(--pixel);
+    font-size: 10px;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.botao {
+    display: inline-block;
+    padding: 14px 20px;
+    margin: 8px 4px 4px;
+    border: none;
+    color: var(--marinho);
+    background-color: var(--ciano);
+    box-shadow: var(--caixa), inset -4px -4px 0 rgba(0, 0, 0, 0.25);
+    font-family: var(--pixel);
+    font-size: 12px;
+    line-height: 1.4;
+    text-decoration: none;
+}
+
+.botao:hover {
+    filter: brightness(1.1);
+}
+
+.botao:active {
+    transform: translateY(3px);
+    box-shadow: var(--caixa), inset 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.secundario {
+    color: var(--titulo);
+    background-color: var(--superficie);
+}
+
+.botao:disabled {
+    opacity: 0.45;
+    cursor: default;
+    transform: none;
+}
+
+.acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.etiqueta {
+    display: inline-block;
+    padding: 6px 10px;
+    color: #ffffff;
+    background-color: var(--primaria);
+    font-family: var(--pixel);
+    font-size: 10px;
+}
+
+:root[data-tema="escuro"] .etiqueta {
+    color: var(--marinho);
+}
+
+.introducao {
+    max-width: 760px;
+    padding: 56px 0 16px;
+}
+
+.introducao > p:last-child {
+    font-size: 20px;
+}
+
+.secao {
+    padding: 24px 0;
+}
+
+.cartoes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    padding: 0;
+    list-style: none;
+}
+
+.cartao, .painel {
+    padding: 24px;
+    background-color: var(--superficie);
+    box-shadow: var(--caixa), 10px 10px 0 var(--sombra);
+}
+
+.painel {
+    margin: 4px 4px 32px;
+}
+
+.painel-azul {
+    background-color: var(--destaque);
+}
+
+.aviso {
+    padding: 16px;
+    margin-top: 28px;
+    border-left: 8px solid var(--ciano);
+    background-color: var(--destaque);
+}
+
+.voltar {
+    display: inline-block;
+    margin-top: 28px;
+    font-family: var(--pixel);
+    font-size: 11px;
+}
+
+.placar-jogo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 4px 28px;
+}
+
+.placar-jogo p {
+    flex: 1 1 280px;
+    margin: 0;
+    padding: 14px 16px;
+    color: #ffffff;
+    background-color: var(--marinho);
+    box-shadow: var(--caixa);
+    font-family: var(--pixel);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.placar-jogo .placar {
+    color: var(--ciano);
+}
+
+.resultado {
+    padding: 24px;
+    margin: 28px 4px;
+    box-shadow: var(--caixa);
+}
+
+.resultado:empty {
+    display: none;
+}
+
+.resultado strong {
+    display: block;
+    margin-bottom: 12px;
+    font-family: var(--pixel);
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.resultado span {
+    display: block;
+    margin-top: 8px;
+}
+
+.resultado-correto, .cartao-situacao.cartao-correto {
+    color: #145534;
+    background-color: #e6f8ec;
+    box-shadow: 0 -4px #20704c, 0 4px #20704c, -4px 0 #20704c, 4px 0 #20704c;
+}
+
+.resultado-incorreto, .cartao-situacao.cartao-incorreto {
+    color: #8c2435;
+    background-color: #fff0f1;
+    box-shadow: 0 -4px #ae3446, 0 4px #ae3446, -4px 0 #ae3446, 4px 0 #ae3446;
+}
+
+.resultado-resumo {
+    color: var(--titulo);
+    background-color: var(--destaque);
+}
+
+.resumo-rodada {
+    font-weight: bold;
+}
+
+.mensagem-jogo {
+    padding: 20px;
+    background-color: var(--destaque);
+    font-size: 20px;
+}
+
+.palavra-mensagem {
+    min-height: 44px;
+    padding: 4px 6px;
+    margin: 2px 0;
+    border: 3px solid transparent;
+    color: var(--titulo);
+    background-color: transparent;
+}
+
+.palavra-mensagem:hover:enabled {
+    border-color: var(--borda);
+}
+
+.palavra-selecionada {
+    color: var(--marinho);
+    background-color: var(--ciano);
+    border-color: var(--marinho);
+}
+
+.palavra-correta {
+    color: #ffffff;
+    background-color: #17613d;
+}
+
+.palavra-incorreta {
+    color: #ffffff;
+    background-color: #a3293d;
+}
+
+.palavra-perdida {
+    color: #724609;
+    background-color: #fff3d8;
+    border: 3px dashed #956119;
+}
+
+.legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    margin: 16px 0 0;
+    list-style: none;
+    font-family: var(--pixel);
+    font-size: 10px;
+}
+
+.legenda li {
+    padding: 6px 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    h1::after {
+        animation: none;
+    }
+}
+
+@media (max-width: 700px) {
+    body {
+        font-size: 17px;
+    }
+
+    h1 {
+        font-size: 21px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+}

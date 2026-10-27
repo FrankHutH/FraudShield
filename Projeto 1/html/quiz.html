@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Dois jogos curtos para treinar a identificar golpes digitais.">
+        <meta name="theme-color" content="#0b1b3f">
+
+        <title>Jogar | FraudShield</title>
+        <link rel="icon" href="../img/favicon.png">
+        <link rel="stylesheet" href="../css/quiz.css">
+
+        <script src="../js/tema.js"></script>
+        <script src="../js/progresso.js" defer></script>
+        <script src="../js/quiz.js" defer></script>
+    </head>
+
+    <body>
+        <header class="cabecalho-principal">
+            <a class="marca" href="index.html" aria-label="FraudShield — início"><img src="../img/logo.png" alt=""><span>Fraud<b>Shield</b></span></a>
+
+            <nav class="menu-navegacao" aria-label="Navegação principal">
+                <a href="index.html">Início</a>
+                <a href="golpes.html">Golpes</a>
+                <a href="dicas.html">Dicas</a>
+                <a href="quiz.html" aria-current="page" class="ativo">Jogar</a>
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+
+            <button class="alternar-tema" id="alternarTema" type="button" aria-pressed="false">☾ Escuro</button>
+        </header>
+
+        <main>
+            <header class="introducao">
+                <h1>Escolha um jogo</h1>
+                <p>Sem cronômetro e sem cadastro. Errar aqui é de graça — é justamente pra isso que serve.</p>
+            </header>
+
+            <ol class="cartoes secao">
+                <li class="cartao">
+                    <p class="etiqueta">Fase 1</p>
+                    <h2>Golpe ou seguro?</h2>
+                    <p>Leia cada situação e decida: é golpe ou é uma atitude segura?</p>
+                    <a class="botao" href="quiz1.html">▶ Jogar</a>
+                </li>
+
+                <li class="cartao">
+                    <p class="etiqueta">Fase 2</p>
+                    <h2>Encontre os sinais</h2>
+                    <p>Toque nas palavras da mensagem que deveriam acender o alerta.</p>
+                    <a class="botao" href="quiz2.html">▶ Jogar</a>
+                </li>
+            </ol>
+
+            <section class="painel placar-geral" aria-labelledby="titulo-placar">
+                <h2 id="titulo-placar">Seu placar</h2>
+
+                <p class="pontuacao-total" id="pontuacaoTotal">0 pontos</p>
+                <progress id="barraProgresso" value="0" max="100" aria-label="Progresso do treinamento">0%</progress>
+                <p id="textoProgresso">Progresso: 0%</p>
+
+                <ul class="status-jogos">
+                    <li id="statusJogo1">Fase 1 — não concluída</li>
+                    <li id="statusJogo2">Fase 2 — não concluída</li>
+                </ul>
+
+                <p><small>Cada acerto vale 10 pontos. O placar fica salvo só neste navegador.</small></p>
+
+                <button class="botao secundario" id="botaoZerarPontos" type="button">Zerar placar</button>
+            </section>
+        </main>
+
+        <footer class="rodape-principal">
+            <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
+
+            <nav aria-label="Links do rodapé">
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+        </footer>
+    </body>
+</html>

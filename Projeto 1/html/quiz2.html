@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Jogo: encontre as palavras suspeitas em mensagens de golpe.">
+        <meta name="theme-color" content="#0b1b3f">
+
+        <title>Encontre os sinais | FraudShield</title>
+        <link rel="icon" href="../img/favicon.png">
+        <link rel="stylesheet" href="../css/quiz2.css">
+
+        <script src="../js/tema.js"></script>
+        <script src="../js/dados/mensagens.js" defer></script>
+        <script src="../js/progresso.js" defer></script>
+        <script src="../js/feedback.js" defer></script>
+        <script src="../js/quiz2.js" defer></script>
+    </head>
+
+    <body>
+        <header class="cabecalho-principal">
+            <a class="marca" href="index.html" aria-label="FraudShield — início"><img src="../img/logo.png" alt=""><span>Fraud<b>Shield</b></span></a>
+
+            <nav class="menu-navegacao" aria-label="Navegação principal">
+                <a href="index.html">Início</a>
+                <a href="golpes.html">Golpes</a>
+                <a href="dicas.html">Dicas</a>
+                <a href="quiz.html" aria-current="page" class="ativo">Jogar</a>
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+
+            <button class="alternar-tema" id="alternarTema" type="button" aria-pressed="false">☾ Escuro</button>
+        </header>
+
+        <main>
+            <a class="voltar" href="quiz.html">← Voltar aos jogos</a>
+
+            <header class="introducao">
+                <p class="etiqueta">Fase 2</p>
+                <h1>Encontre os sinais</h1>
+                <p>Toque nas palavras que deveriam acender o alerta. Se a mensagem parecer limpa, verifique sem marcar nada.</p>
+            </header>
+
+            <section class="placar-jogo" aria-label="Placar">
+                <p id="progressoJogo2" role="status"></p>
+                <p class="placar" id="placarJogo2">Pontos nesta sessão: 0</p>
+            </section>
+
+            <section class="painel" aria-labelledby="mensagem-titulo">
+                <h2 id="mensagem-titulo" tabindex="-1">Mensagem recebida</h2>
+                <p class="mensagem-jogo" id="mensagemJogo"></p>
+
+                <ul class="legenda" aria-label="Legenda da correção">
+                    <li class="palavra-correta">✓ Achou</li>
+                    <li class="palavra-incorreta">✕ Não era</li>
+                    <li class="palavra-perdida">! Faltou</li>
+                </ul>
+            </section>
+
+            <p id="resultadoJogo2" class="resultado" role="status" aria-atomic="true" tabindex="-1"></p>
+
+            <p class="acoes">
+                <button class="botao" id="botaoVerificarJogo2" type="button">Verificar</button>
+                <button class="botao secundario" id="botaoProximaMensagem" type="button" disabled>Próxima mensagem</button>
+                <button class="botao" id="botaoProximaRodadaJogo2" type="button" hidden>Próxima rodada</button>
+                <button class="botao secundario" id="botaoEncerrarJogo2" type="button" hidden>Parar por aqui</button>
+            </p>
+
+            <p class="aviso">Uma palavra sozinha não prova que é golpe. O que pesa é o conjunto: pressa, dinheiro, senha, link.</p>
+        </main>
+
+        <footer class="rodape-principal">
+            <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
+
+            <nav aria-label="Links do rodapé">
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+        </footer>
+    </body>
+</html>

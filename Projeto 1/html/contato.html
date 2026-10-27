@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Mande uma dúvida ou sugestão para o FraudShield.">
+        <meta name="theme-color" content="#0b1b3f">
+
+        <title>Contato | FraudShield</title>
+        <link rel="icon" href="../img/favicon.png">
+        <link rel="stylesheet" href="../css/contato.css">
+
+        <script src="../js/tema.js"></script>
+        <script src="../js/contato.js" defer></script>
+    </head>
+
+    <body>
+        <header class="cabecalho-principal">
+            <a class="marca" href="index.html" aria-label="FraudShield — início"><img src="../img/logo.png" alt=""><span>Fraud<b>Shield</b></span></a>
+
+            <nav class="menu-navegacao" aria-label="Navegação principal">
+                <a href="index.html">Início</a>
+                <a href="golpes.html">Golpes</a>
+                <a href="dicas.html">Dicas</a>
+                <a href="quiz.html">Jogar</a>
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html" aria-current="page" class="ativo">Contato</a>
+            </nav>
+
+            <button class="alternar-tema" id="alternarTema" type="button" aria-pressed="false">☾ Escuro</button>
+        </header>
+
+        <main>
+            <header class="introducao">
+                <h1>Fale com a gente</h1>
+                <p>Viu um golpe que não está aqui? Tem uma sugestão? Escreva.</p>
+            </header>
+
+            <section class="contato" aria-label="Orientações e formulário de contato">
+                <aside class="painel painel-azul">
+                    <h2>Recebeu algo estranho agora?</h2>
+
+                    <ol class="passos">
+                        <li>Não mande dinheiro nem dados.</li>
+                        <li>Ligue para a pessoa ou empresa por um número que você já conhece.</li>
+                        <li>Não passe senha nem código.</li>
+                        <li>Já fez o Pix? Ligue na hora para o seu banco, pelo número atrás do cartão.</li>
+                    </ol>
+
+                    <a href="dicas.html">Ver todas as dicas</a>
+                </aside>
+
+                <article class="painel">
+                    <h2>Sua mensagem</h2>
+                    <p>Este formulário é de demonstração: ele monta o texto para você copiar, mas não envia nada.</p>
+
+                    <form id="contactForm">
+                        <label for="nome">Nome</label>
+                        <input id="nome" name="nome" autocomplete="name" maxlength="100" required>
+
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" autocomplete="email" maxlength="200" required>
+
+                        <label for="mensagem">Mensagem</label>
+                        <textarea id="mensagem" name="mensagem" maxlength="3000" aria-describedby="privacidade" required></textarea>
+                        <small id="privacidade">Não escreva senhas, códigos ou dados de cartão.</small>
+
+                        <button class="botao" type="submit">Preparar mensagem</button>
+                        <p id="formStatus" class="aviso" role="status" hidden></p>
+
+                        <label for="mensagemPreparada" id="rotuloPreparada" hidden>Mensagem pronta para copiar</label>
+                        <textarea id="mensagemPreparada" readonly hidden></textarea>
+                        <button class="botao secundario" id="copiarMensagem" type="button" hidden>Copiar mensagem</button>
+                    </form>
+                </article>
+            </section>
+        </main>
+
+        <footer class="rodape-principal">
+            <p><strong>FraudShield</strong> · projeto de extensão de Murilo Lobato</p>
+
+            <nav aria-label="Links do rodapé">
+                <a href="sobre.html">Sobre</a>
+                <a href="contato.html">Contato</a>
+            </nav>
+        </footer>
+    </body>
+</html>
