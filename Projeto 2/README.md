@@ -110,6 +110,45 @@ As oito páginas originais foram adaptadas de HTML para JSX; os links agora apon
 
 `app/layout.jsx` utiliza `Header` e `Footer` uma única vez para todas as páginas. `Header` reutiliza `Navbar` (mostra qual seção está ativa) e `ThemeToggle` (controla o tema com `useState` e `useEffect`). O componente `Card` aparece nas listas de Início, Sobre, Golpes, Dicas e Jogos; recebe o conteúdo por `children` e mantém a classe CSS original `cartao`.
 
+### Diagrama de ligação entre os componentes
+
+O diagrama registra as relações **confirmadas nos arquivos JSX** e diferencia os componentes React dos scripts legados. Cada seta indica quem renderiza ou usa o item ligado.
+
+```mermaid
+flowchart TB
+    ROOT["app/layout.jsx<br/>RootLayout"]
+    HEADER["Header.jsx<br/>Cabeçalho comum"]
+    ROUTES["8 páginas Next.js<br/>/, /sobre, /golpes, /dicas<br/>/quiz, /quiz1, /quiz2, /contato"]
+    FOOTER["Footer.jsx<br/>Rodapé comum"]
+    NAV["Navbar.jsx<br/>Navegação e rota ativa"]
+    THEME["ThemeToggle.jsx<br/>Tema claro/escuro"]
+    CARD["Card.jsx<br/>Cartões reutilizáveis"]
+    LEGACY["LegacyScripts.jsx<br/>Integração JavaScript existente"]
+    JS["public/js/<br/>Jogos, progresso e contato"]
+    ROOT -->|"renderiza"| HEADER
+    ROOT -->|"{children}"| ROUTES
+    ROOT -->|"renderiza"| FOOTER
+    HEADER --> NAV
+    HEADER --> THEME
+    ROUTES -->|"Início, Sobre, Golpes, Dicas, Jogos"| CARD
+    ROUTES -->|"Jogos e Contato"| LEGACY
+    LEGACY -->|"carrega scripts"| JS
+    classDef raiz fill:#173c63,color:#fff,stroke:#173c63,stroke-width:2px
+    classDef estrutura fill:#e8f2ff,color:#1a3853,stroke:#386b9b
+    classDef paginas fill:#e8faf2,color:#14573f,stroke:#2c8a6d
+    classDef componentes fill:#f0efff,color:#312d66,stroke:#726db3
+    classDef legado fill:#f4f6f8,color:#435466,stroke:#95a3af
+    class ROOT raiz
+    class HEADER,FOOTER estrutura
+    class ROUTES paginas
+    class NAV,THEME,CARD,LEGACY componentes
+    class JS legado
+```
+
+**Relações principais:** o `RootLayout` inclui `Header`, as oito páginas e `Footer`; `Header` inclui `Navbar` e `ThemeToggle`; cinco páginas usam `Card`; Jogos e Contato usam `LegacyScripts`, responsável por carregar os arquivos de `public/js/`.
+
+O código do diagrama também está salvo em [`docs/diagrama-componentes.mmd`](docs/diagrama-componentes.mmd) para edição e reutilização no envio ao professor.
+
 ### Estado atual dos jogos
 
 Os jogos e o formulário usam temporariamente a lógica JavaScript original, carregada por `LegacyScripts` depois que a página é renderizada. A migração da lógica dos jogos para hooks React, a API local e as rotas dinâmicas continuam fora desta etapa.
