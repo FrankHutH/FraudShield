@@ -2,6 +2,8 @@
 
 Projeto educacional de prevenção a golpes digitais, voltado principalmente a pessoas idosas.
 
+> **📁 Procurando o README do Projeto 1?** A documentação **original e completa da primeira versão** foi preservada, sem alterações, em **[Projeto 1/README.md](Projeto%201/README.md)**. Este README principal apresenta a organização geral do repositório e os componentes do Projeto 2.
+
 ## Versões
 
 - **[Projeto 1](Projeto%201/README.md)** — versão original em HTML, CSS e JavaScript, mantida sem alterações.
