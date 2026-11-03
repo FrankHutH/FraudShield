@@ -15,7 +15,7 @@ const routes = [
   ["/contato", "Fale com a gente", 0]
 ];
 
-const server = spawn(process.execPath, ["scripts/serve-static.mjs", "3125"], {
+const server = spawn(process.execPath, ["node_modules/next/dist/bin/next", "start", "-p", "3125", "-H", "127.0.0.1"], {
   cwd: process.cwd(),
   env: { ...process.env, NEXT_TELEMETRY_DISABLED: "1" },
   stdio: ["ignore", "pipe", "pipe"]
@@ -28,8 +28,8 @@ server.stderr.on("data", (chunk) => { output += chunk.toString(); });
 try {
   let ready = false;
 
-  for (let attempt = 0; attempt < 40; attempt++) {
-    if (server.exitCode !== null) throw new Error("Servidor estático encerrou inesperadamente.");
+  for (let attempt = 0; attempt < 90; attempt++) {
+    if (server.exitCode !== null) throw new Error("Servidor Next.js encerrou inesperadamente.");
     try {
       const response = await fetch(host + "/");
       if (response.ok) {
@@ -40,7 +40,7 @@ try {
     await pause(500);
   }
 
-  if (!ready) throw new Error("Servidor da exportação estática não iniciou.");
+  if (!ready) throw new Error("Servidor Next.js de produção não iniciou.");
 
   for (const [route, title, cards] of routes) {
     const response = await fetch(host + route);

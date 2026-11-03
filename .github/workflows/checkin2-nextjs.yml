@@ -1,5 +1,5 @@
 # Murilo Lobato - RA: 10752958
-name: Projeto 2 - Next.js
+name: Projeto 2 - Next.js 15 / Amplify SSR
 
 on:
   pull_request:
@@ -8,6 +8,7 @@ on:
   push:
     branches:
       - main
+      - "checkin3/**"
 
 permissions:
   contents: read
@@ -24,5 +25,6 @@ jobs:
         with:
           node-version: "22"
       - run: npm install --no-audit --no-fund
+      - run: npm test
       - run: npm run build
       - run: npm run test:smoke

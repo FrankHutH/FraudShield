@@ -32,3 +32,7 @@ npm run dev
 ```
 
 Acesse http://localhost:3000. Veja o tutorial e a declaração de uso de IA no README do Projeto 2.
+
+## Deploy AWS Amplify (Next.js 15)
+
+O Projeto 2 está preparado para hospedagem SSR sem domínio próprio no AWS Amplify, por meio de `amplify.yml` na raiz deste repositório. Selecione `Projeto 2` como raiz do monorepo e consulte as instruções detalhadas no [README do Projeto 2](Projeto%202/README.md#publicação-no-aws-amplify-hosting--nextjs-15-ssr-sem-domínio).

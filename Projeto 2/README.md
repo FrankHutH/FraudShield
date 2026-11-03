@@ -170,21 +170,39 @@ O ChatGPT (OpenAI) foi utilizado como apoio para adaptar o HTML/CSS, organizar o
 - Os scripts dos jogos foram preservados nesta etapa para evitar antecipar a migração completa da lógica.
 
 
-## Hospedagem na AWS Amplify (Check-in 2)
+## Publicação no AWS Amplify Hosting — Next.js 15 SSR, sem domínio
 
-A aplicação usa exportação estática do Next.js por meio de `next.config.mjs` (`output: "export"` e `trailingSlash: true`). A compilação produz `Projeto 2/out/`, contendo o HTML das oito rotas, CSS, JavaScript, fontes e imagens necessários para disponibilizar o site sem servidor Node.js.
+A aplicação utiliza **Next.js 15.5.28** (correções de segurança de outubro/2026), React 19 e **Amplify Hosting compute**. A versão anterior exportava arquivos estáticos para `out/`; a versão atual usa `next build` e publica `.next/`. O modo SSR permite introduzir uma API interna Next.js nos próximos check-ins sem mudar de hospedagem. A API ainda não faz parte desta entrega.
 
-O arquivo `amplify.yml`, na **raiz do repositório**, configura o monorepo com `appRoot: 'Projeto 2'`, executa `npm install`, `npm run build` e `npm run test:smoke`, e publica `out/`. No assistente AWS Amplify, selecione a branch `main`, diretório raiz **Projeto 2** e diretório de saída **out**. Não use a URL do GitHub nem o caminho codificado `Projeto%202` nesses campos.
-
-Comandos locais, executados em `Projeto 2/`:
+### Executar e testar localmente
 
 ```bash
+cd "Projeto 2"
 npm install
+npm test
 npm run build
 npm run test:smoke
-npm run start
+npm start
 ```
 
-Após executar `npm run start`, o site exportado pode ser acessado em `http://localhost:3000`. Para desenvolvimento, continue utilizando `npm run dev`.
+O teste automatizado `test:smoke` inicia o servidor de produção Next.js e valida as oito páginas e arquivos estáticos. Os testes devem ser executados sem cliques ou verificações visuais manuais.
 
-**Limite desta publicação:** o site funciona com arquivos estáticos e scripts executados no navegador. Uma API interna de Next.js ou renderização no servidor, previstas para etapas futuras, exigirá remover `output: "export"` e reconfigurar a hospedagem.
+### Publicação sem domínio próprio
+
+1. Faça login no AWS Console e acesse **AWS Amplify → Create new app**.
+2. Escolha GitHub e autorize o repositório `FrankHutH/FraudShield`.
+3. Selecione `main` depois que a alteração for incorporada ou `checkin3/next15-amplify-ssr` para testar a branch.
+4. Marque **My app is a monorepo** e informe o diretório **`Projeto 2`** (com espaço). Verifique `AMPLIFY_MONOREPO_APP_ROOT=Projeto 2`.
+5. O `amplify.yml` na raiz define `npm install`, testes, build e `baseDirectory: .next`. Confirme que Amplify reconheceu a aplicação como **Next.js SSR / WEB_COMPUTE**, não como exportação estática.
+6. Clique em **Save and deploy**. O Amplify fornecerá um endereço HTTPS no domínio `amplifyapp.com`, sem precisar comprar domínio.
+
+**A publicação na AWS ainda precisa ser iniciada na sua conta.** Enviar código ao GitHub não cria sozinho uma aplicação Amplify.
+
+### Notas
+
+- Os HTML/CSS e JS originais continuam preservados em `Projeto 1/`.
+- As oito rotas atuais são `/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2` e `/contato`.
+- Os minijogos ainda usam scripts do Projeto 1 carregados pelo componente React `LegacyScripts`.
+- O uso de IA na preparação, refatoração, testes e configuração deve continuar declarado no README.
+- Não existe `package-lock.json` no repositório atual; por isso `amplify.yml` utiliza `npm install` em vez de `npm ci`. Para builds integralmente reprodutíveis, gerar e versionar um lockfile após validação em ambiente com acesso ao npm.
+
