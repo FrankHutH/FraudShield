@@ -70,6 +70,13 @@ try {
   }
 
 
+
+  // Confirma ausência dos antigos scripts públicos.
+  for (const asset of ["/js/quiz1.js", "/js/quiz2.js", "/js/progresso.js"]) {
+    const response = await fetch(host + asset);
+    if (response.status !== 404) throw new Error("Script legado ainda disponível: " + asset);
+  }
+
   const apiResponse = await fetch(host + "/api/golpes");
   if (!apiResponse.ok) throw new Error("API respondeu " + apiResponse.status);
   if (!(apiResponse.headers.get("content-type") || "").includes("application/json")) {
