@@ -1,6 +1,7 @@
 // Murilo Lobato - RA: 10752958
 
 import { spawn } from "node:child_process";
+import { readFileSync } from "node:fs";
 import { setTimeout as pause } from "node:timers/promises";
 
 const host = "http://127.0.0.1:3125";
@@ -89,6 +90,21 @@ try {
     }
     console.log("OK /golpes/" + golpe.id);
   }
+  // Testes HTTP reais das duas APIs usadas pelos jogos.
+  for (const nome of ["situacoes", "mensagens"]) {
+    const resposta = await fetch(host + "/api/" + nome);
+    if (resposta.status !== 200) throw new Error("API " + nome + " respondeu " + resposta.status);
+    if (!(resposta.headers.get("content-type") || "").includes("application/json")) {
+      throw new Error("API " + nome + " não retornou JSON");
+    }
+    const recebido = await resposta.json();
+    const esperado = JSON.parse(readFileSync(new URL("../data/" + nome + ".json", import.meta.url), "utf8"));
+    if (JSON.stringify(recebido) !== JSON.stringify(esperado)) {
+      throw new Error("API " + nome + " retornou dados diferentes do JSON");
+    }
+    console.log("OK /api/" + nome + " (" + recebido.length + " registros)");
+  }
+
   const inexistente = await fetch(host + "/golpes/999999");
   if (inexistente.status !== 404) throw new Error("ID inexistente não retornou 404");
 

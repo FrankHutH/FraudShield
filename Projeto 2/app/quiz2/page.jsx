@@ -1,6 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
-import LegacyScripts from "../../components/LegacyScripts";
+import CarregadorJogo from "../../components/CarregadorJogo";
 import "../../styles/pages/quiz2.css";
 
 export const metadata = {
@@ -19,6 +19,12 @@ export default function Page() {
                       <h1>Encontre os sinais</h1>
                       <p>Toque nas palavras que deveriam acender o alerta. Se a mensagem parecer limpa, verifique sem marcar nada.</p>
                   </header>
+
+                  <CarregadorJogo
+                      url="/api/mensagens"
+                      nomeBanco="fraudshieldMensagens"
+                      scripts={["/js/progresso.js", "/js/feedback.js", "/js/quiz2.js"]}
+                  />
 
                   <section className="placar-jogo" aria-label="Placar">
                       <p id="progressoJogo2" role="status"></p>
@@ -39,7 +45,7 @@ export default function Page() {
                   <p id="resultadoJogo2" className="resultado" role="status" aria-atomic="true" tabIndex="-1"></p>
 
                   <p className="acoes">
-                      <button className="botao" id="botaoVerificarJogo2" type="button">Verificar</button>
+                      <button className="botao" id="botaoVerificarJogo2" type="button" disabled>Verificar</button>
                       <button className="botao secundario" id="botaoProximaMensagem" type="button" disabled>Próxima mensagem</button>
                       <button className="botao" id="botaoProximaRodadaJogo2" type="button" hidden>Próxima rodada</button>
                       <button className="botao secundario" id="botaoEncerrarJogo2" type="button" hidden>Parar por aqui</button>
@@ -48,7 +54,7 @@ export default function Page() {
                   <p className="aviso">Uma palavra sozinha não prova que é golpe. O que pesa é o conjunto: pressa, dinheiro, senha, link.</p>
               </main>
 
-<LegacyScripts scripts={["/js/dados/mensagens.js","/js/progresso.js","/js/feedback.js","/js/quiz2.js"]} />
+
     </>
   );
 }

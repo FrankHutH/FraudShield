@@ -1,5 +1,7 @@
 // Murilo Lobato - RA: 10752958
 
+const bancoSituacoes = window.fraudshieldSituacoes;
+
 const listaCartoes = document.getElementById("listaCartoes");
 const cartoesGolpe = document.getElementById("cartoesGolpe");
 const cartoesSeguro = document.getElementById("cartoesSeguro");

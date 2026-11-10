@@ -1,5 +1,7 @@
 // Murilo Lobato - RA: 10752958
 
+const bancoMensagens = window.fraudshieldMensagens;
+
 const elementoMensagem = document.getElementById("mensagemJogo");
 
 const progresso = document.getElementById("progressoJogo2");
