@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-export default function CarregadorJogo({ url, Componente }) {
+import JogoSituacoes from "./JogoSituacoes";
+import JogoMensagens from "./JogoMensagens";
+export default function CarregadorJogo({ url, tipo }) {
   const [dados, setDados] = useState(null);
   const [erro, setErro] = useState("");
   const [tentativa, setTentativa] = useState(0);
@@ -19,5 +21,5 @@ export default function CarregadorJogo({ url, Componente }) {
   }, [url, tentativa]);
   if (erro) return <p role="alert">{erro} <button type="button" className="botao secundario" onClick={() => setTentativa(n => n + 1)}>Tentar novamente</button></p>;
   if (!dados) return <p role="status">Carregando perguntas do jogo...</p>;
-  return <Componente dados={dados} />;
+  return tipo === "situacoes" ? <JogoSituacoes dados={dados}/> : <JogoMensagens dados={dados}/>;
 }
