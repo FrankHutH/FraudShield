@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
+
   return (
     <header className="cabecalho-principal">
       <a className="marca" href="/" aria-label="FraudShield — início">
