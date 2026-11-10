@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test:smoke": "node scripts/smoke.mjs",
-    "test": "node --test scripts/checkin3.test.mjs"
+    "test": "node --test scripts/*.test.mjs"
   },
   "dependencies": {
     "next": "15.5.28",

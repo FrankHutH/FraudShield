@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "titulo": "Clonagem de voz",
+    "tipo": "Ligação ou áudio",
+    "exemplo": "Alguém imita a voz de um familiar e pede um Pix urgente.",
+    "orientacao": "Desligue e ligue para o número que você já conhece."
+  },
+  {
+    "id": 2,
+    "titulo": "Falso banco",
+    "tipo": "Telefone ou mensagem",
+    "exemplo": "Uma pessoa se apresenta como atendente e pede seu código de SMS.",
+    "orientacao": "Nunca informe códigos. Procure o banco pelo aplicativo ou telefone oficial."
+  },
+  {
+    "id": 3,
+    "titulo": "Mensagem com link falso",
+    "tipo": "WhatsApp ou SMS",
+    "exemplo": "Uma mensagem diz que sua conta será bloqueada e exige um clique.",
+    "orientacao": "Não clique no link. Abra o aplicativo oficial por conta própria."
+  }
+]
