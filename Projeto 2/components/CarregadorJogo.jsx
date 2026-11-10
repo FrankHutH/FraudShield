@@ -1,7 +1,9 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import JogoSituacoes from "./JogoSituacoes";
 import JogoMensagens from "./JogoMensagens";
+
 export default function CarregadorJogo({ url, tipo }) {
   const [dados, setDados] = useState(null);
   const [erro, setErro] = useState("");
