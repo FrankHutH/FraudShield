@@ -1,55 +1,23 @@
 "use client";
-
 import { useEffect, useState } from "react";
-import LegacyScripts from "./LegacyScripts";
-
-// Busca os dados do servidor antes de iniciar a lógica dos jogos.
-export default function CarregadorJogo({ url, nomeBanco, scripts }) {
+export default function CarregadorJogo({ url, Componente }) {
   const [dados, setDados] = useState(null);
   const [erro, setErro] = useState("");
   const [tentativa, setTentativa] = useState(0);
-
   useEffect(() => {
-    const controlador = new AbortController();
-
-    fetch(url, { signal: controlador.signal })
-      .then((resposta) => {
-        if (!resposta.ok) throw new Error("Erro ao buscar os dados");
-        return resposta.json();
-      })
-      .then((lista) => {
-        if (!Array.isArray(lista) || lista.length === 0) {
-          throw new Error("Dados inválidos");
-        }
-        setDados(lista);
-      })
-      .catch(() => {
-        if (!controlador.signal.aborted) {
-          setErro("Não foi possível carregar as perguntas do jogo.");
-        }
-      });
-
-    return () => controlador.abort();
-  }, [url, tentativa]);
-
-  function tentarNovamente() {
-    setDados(null);
+    const controller = new AbortController();
     setErro("");
-    setTentativa((numero) => numero + 1);
-  }
-
-  if (erro) {
-    return (
-      <p role="alert">
-        {erro}{" "}
-        <button className="botao secundario" type="button" onClick={tentarNovamente}>
-          Tentar novamente
-        </button>
-      </p>
-    );
-  }
-
+    setDados(null);
+    fetch(url, { signal: controller.signal }).then(response => {
+      if (!response.ok) throw new Error("Falha na API");
+      return response.json();
+    }).then(lista => {
+      if (!Array.isArray(lista) || !lista.length) throw new Error("JSON inválido");
+      setDados(lista);
+    }).catch(() => { if (!controller.signal.aborted) setErro("Não foi possível carregar as perguntas do jogo."); });
+    return () => controller.abort();
+  }, [url, tentativa]);
+  if (erro) return <p role="alert">{erro} <button type="button" className="botao secundario" onClick={() => setTentativa(n => n + 1)}>Tentar novamente</button></p>;
   if (!dados) return <p role="status">Carregando perguntas do jogo...</p>;
-
-  return <LegacyScripts scripts={scripts} nomeBanco={nomeBanco} dados={dados} />;
+  return <Componente dados={dados} />;
 }

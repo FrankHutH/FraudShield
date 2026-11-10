@@ -1,6 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
-import LegacyScripts from "../../components/LegacyScripts";
+import Placar from "../../components/Placar";
 import "../../styles/pages/quiz.css";
 import Card from "../../components/Card";
 
@@ -34,25 +34,10 @@ export default function Page() {
                       </Card>
                   </ol>
 
-                  <section className="painel placar-geral" aria-labelledby="titulo-placar">
-                      <h2 id="titulo-placar">Seu placar</h2>
-
-                      <p className="pontuacao-total" id="pontuacaoTotal">0 pontos</p>
-                      <progress id="barraProgresso" value="0" max="100" aria-label="Progresso do treinamento">0%</progress>
-                      <p id="textoProgresso">Progresso: 0%</p>
-
-                      <ul className="status-jogos">
-                          <li id="statusJogo1">Fase 1 — não concluída</li>
-                          <li id="statusJogo2">Fase 2 — não concluída</li>
-                      </ul>
-
-                      <p><small>Cada acerto vale 10 pontos. O placar fica salvo só neste navegador.</small></p>
-
-                      <button className="botao secundario" id="botaoZerarPontos" type="button">Zerar placar</button>
-                  </section>
+                  <Placar />
               </main>
 
-<LegacyScripts scripts={["/js/progresso.js","/js/quiz.js"]} />
+
     </>
   );
 }
