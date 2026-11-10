@@ -14,5 +14,5 @@ test("as duas fases recebem a API e renderizam componentes React",()=>{
   assert.match(read("app/quiz1/page.jsx"), /url="\/api\/situacoes"/);
   assert.match(read("app/quiz2/page.jsx"), /url="\/api\/mensagens"/);
   assert.match(read("components/CarregadorJogo.jsx"), /fetch\(url/);
-  assert.match(read("components/CarregadorJogo.jsx"), /<Componente dados=\{dados\}/);
+  assert.match(read("components/CarregadorJogo.jsx"), /<JogoSituacoes dados=\{dados\}/);
 });
