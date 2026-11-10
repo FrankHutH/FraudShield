@@ -1,6 +1,8 @@
 "use client";
+
 import { useState } from "react";
 import { ler, registrar, sortear } from "./pontuacao";
+
 export default function JogoSituacoes({ dados }) {
   const [rodada, setRodada] = useState(() =>
     sortear(dados).map((item) => ({ ...item, marcada: null })),
@@ -11,8 +13,10 @@ export default function JogoSituacoes({ dados }) {
   const [rodadaPontos, setRodadaPontos] = useState(0);
   const [resultado, setResultado] = useState("");
   const [encerrado, setEncerrado] = useState(false);
+
   const respondidas = rodada.filter((item) => item.marcada).length;
   const concluida = respondidas === rodada.length;
+
   function classificar(tipo, indice = selecionado) {
     if (indice < 0 || rodada[indice]?.marcada || encerrado) return;
     const certo = rodada[indice].respostaCorreta === tipo;
@@ -38,6 +42,7 @@ export default function JogoSituacoes({ dados }) {
     );
     setSelecionado(-1);
   }
+
   function proxima() {
     setRodada(sortear(dados).map((item) => ({ ...item, marcada: null })));
     setSelecionado(-1);
@@ -46,6 +51,7 @@ export default function JogoSituacoes({ dados }) {
     setResultado("");
     setEncerrado(false);
   }
+
   return (
     <>
       <section className="placar-jogo" aria-label="Placar">
@@ -58,6 +64,7 @@ export default function JogoSituacoes({ dados }) {
           Recorde: {ler(1, "Recorde")}
         </p>
       </section>
+
       <section aria-labelledby="situacoes">
         <h2 id="situacoes">Situações</h2>
         <ul className="cartoes">
@@ -88,6 +95,7 @@ export default function JogoSituacoes({ dados }) {
           )}
         </ul>
       </section>
+
       <section className="cartoes categorias" aria-label="Caixas de resposta">
         {["golpe", "seguro"].map((tipo) => (
           <article
@@ -138,6 +146,7 @@ export default function JogoSituacoes({ dados }) {
           </article>
         ))}
       </section>
+
       <p className="resultado" role="status">
         {resultado}
         {concluida && !encerrado
