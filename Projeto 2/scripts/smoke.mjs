@@ -92,6 +92,27 @@ try {
   const inexistente = await fetch(host + "/golpes/999999");
   if (inexistente.status !== 404) throw new Error("ID inexistente não retornou 404");
 
+
+  for (const [caminho, arquivo, quantidade] of [
+    ["/api/situacoes", "situacoes", 62],
+    ["/api/mensagens", "mensagens", 55]
+  ]) {
+    const response = await fetch(host + caminho);
+    if (response.status !== 200) throw new Error(caminho + " respondeu " + response.status);
+    if (!(response.headers.get("content-type") || "").includes("application/json")) {
+      throw new Error(caminho + " não retornou JSON");
+    }
+    const dados = await response.json();
+    const { readFileSync } = await import("node:fs");
+    const { resolve } = await import("node:path");
+    const esperado = JSON.parse(readFileSync(resolve("data", arquivo + ".json"), "utf8"));
+    if (!Array.isArray(dados) || dados.length !== quantidade ||
+        JSON.stringify(dados) !== JSON.stringify(esperado)) {
+      throw new Error(caminho + " devolveu dados diferentes do JSON");
+    }
+    console.log("OK " + caminho + " (" + quantidade + " registros)");
+  }
+
   console.log("Oito rotas, API JSON, rotas dinâmicas e recursos estáticos verificados.");
 } catch (error) {
   console.error(error);

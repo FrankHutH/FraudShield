@@ -83,3 +83,21 @@ As oito rotas de páginas são caminhos fixos. Rotas dinâmicas parametrizadas a
 
 **Persistência:** a pontuação continuará no `localStorage`. Não será necessário banco de dados para o requisito de API com JSON fixo.
 
+
+
+## Implementação efetiva das APIs dos jogos
+
+O plano de `/api/situacoes` e `/api/mensagens` foi implementado. Os
+arquivos `data/situacoes.json` (62 itens) e `data/mensagens.json` (55 itens)
+são importados pelas respectivas rotas GET do servidor Next.js. O componente
+cliente `DadosJogoAPI` executa `fetch()` dentro de `useEffect()`, utiliza
+`useState()` para carregamento/erro e disponibiliza a lista recebida aos
+scripts de cada jogo antes de inicializá-los. A pontuação permanece em
+`localStorage`. A rota extra `/api/golpes` e a rota dinâmica
+`/golpes/[id]` continuam existindo. As listas legadas em JS não são
+carregadas pelos jogos após essa mudança.
+
+Verificações automáticas: `npm test`, `npm run build`,
+`npm run test:smoke`. Testes de estrutura conferem a ligação, e o smoke
+compara os endpoints HTTP às fontes JSON. Não confundir estes testes
+com uma validação completa de comportamento do navegador.

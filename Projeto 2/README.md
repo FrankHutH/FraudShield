@@ -234,3 +234,22 @@ npm run test:smoke
 `npm test` verifica os arquivos do JSON, a rota de API, o consumo com hooks e a rota dinâmica. `test:smoke` inicia o servidor de produção, faz requisições HTTP reais à API e às páginas dinâmicas, verifica os dados retornados e confirma 404 para IDs inexistentes. Os testes anteriores continuam incluídos.
 
 **Limite:** o JSON é fixo e local. Não há cadastro, banco de dados ou salvamento remoto; isso não é necessário para demonstrar GET, fetch e rotas dinâmicas. O apoio do ChatGPT na implementação, nos testes e nesta documentação está declarado na seção de transparência.
+
+
+## Integração dos jogos com API JSON — Check-in 3
+
+Os dados completos dos jogos agora estão em `data/situacoes.json` (62 situações)
+e `data/mensagens.json` (55 mensagens). Os endpoints `GET /api/situacoes`
+e `GET /api/mensagens` retornam esses dados em JSON.
+
+As páginas `/quiz1` e `/quiz2` renderizam o componente cliente
+`DadosJogoAPI`, que usa `useEffect` para realizar `fetch()`, guarda o
+estado de carregamento e erro em `useState` e só inicializa os scripts
+do jogo após receber a lista. Os scripts mantêm as regras de pontuação e
+`localStorage` existentes, usando os dados da API em vez das antigas listas
+estáticas. As listas JS antigas foram preservadas apenas como referência e
+não são carregadas pelos jogos.
+
+Para verificar: `npm test`, `npm run build` e `npm run test:smoke`.
+O smoke compara as respostas HTTP reais das duas APIs com os respectivos
+JSONs e verifica também as páginas e a API de golpes.

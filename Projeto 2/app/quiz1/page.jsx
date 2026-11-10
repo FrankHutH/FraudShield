@@ -1,6 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
-import LegacyScripts from "../../components/LegacyScripts";
+import DadosJogoAPI from "../../components/DadosJogoAPI";
 import "../../styles/pages/quiz1.css";
 
 export const metadata = {
@@ -56,7 +56,7 @@ export default function Page() {
                   <p className="aviso">Os exemplos são para treino. Uma atitude segura diminui o risco, mas não garante que todo contato seja legítimo.</p>
               </main>
 
-<LegacyScripts scripts={["/js/dados/situacoes.js","/js/dados/feedback.js","/js/progresso.js","/js/feedback.js","/js/quiz1.js"]} />
+<DadosJogoAPI endpoint="/api/situacoes" banco="bancoSituacoes" scripts={["/js/dados/feedback.js","/js/progresso.js","/js/feedback.js","/js/quiz1.js"]} />
     </>
   );
 }

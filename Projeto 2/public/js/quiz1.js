@@ -171,7 +171,7 @@ function iniciarRodada() {
     pontosRodada = 0;
     selecionado = -1;
 
-    rodada = sortearRodada(bancoSituacoes, 4).map(function (item) {
+    rodada = sortearRodada(window.bancoSituacoes, 4).map(function (item) {
         return { texto: item.texto, respostaCorreta: item.respostaCorreta, respondida: false };
     });
 

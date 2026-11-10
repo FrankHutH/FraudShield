@@ -1,6 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
-import LegacyScripts from "../../components/LegacyScripts";
+import DadosJogoAPI from "../../components/DadosJogoAPI";
 import "../../styles/pages/quiz2.css";
 
 export const metadata = {
@@ -48,7 +48,7 @@ export default function Page() {
                   <p className="aviso">Uma palavra sozinha não prova que é golpe. O que pesa é o conjunto: pressa, dinheiro, senha, link.</p>
               </main>
 
-<LegacyScripts scripts={["/js/dados/mensagens.js","/js/progresso.js","/js/feedback.js","/js/quiz2.js"]} />
+<DadosJogoAPI endpoint="/api/mensagens" banco="bancoMensagens" scripts={["/js/progresso.js","/js/feedback.js","/js/quiz2.js"]} />
     </>
   );
 }

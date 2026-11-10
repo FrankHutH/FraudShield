@@ -159,7 +159,7 @@ function proximaMensagem() {
 
 
 function iniciarRodada() {
-    rodada = sortearRodada(bancoMensagens, 4);
+    rodada = sortearRodada(window.bancoMensagens, 4);
     numeroRodada++;
     posicao = 0;
     pontosRodada = 0;
