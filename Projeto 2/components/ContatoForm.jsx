@@ -1,8 +1,11 @@
 "use client";
+
 import { useState } from "react";
+
 export default function ContatoForm() {
   const [texto, setTexto] = useState("");
   const [status, setStatus] = useState("");
+
   function preparar(e) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
@@ -24,6 +27,7 @@ export default function ContatoForm() {
       setStatus("Selecione e copie manualmente o texto abaixo.");
     }
   }
+
   return (
     <form onSubmit={preparar}>
       <label htmlFor="nome">Nome</label>
