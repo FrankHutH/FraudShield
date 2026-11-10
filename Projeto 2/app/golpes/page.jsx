@@ -2,6 +2,7 @@
 
 import "../../styles/pages/golpes.css";
 import Card from "../../components/Card";
+import ListaGolpesAPI from "../../components/ListaGolpesAPI";
 
 export const metadata = {
   title: "Golpes | FraudShield",
@@ -66,6 +67,8 @@ export default function Page() {
                           </details>
                       </Card>
                   </ul>
+
+                  <ListaGolpesAPI />
 
                   <aside className="chamada" aria-labelledby="titulo-chamada">
                       <header>

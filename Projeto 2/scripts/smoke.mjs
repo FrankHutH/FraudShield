@@ -68,7 +68,31 @@ try {
     console.log("OK " + asset);
   }
 
-  console.log("Oito rotas e recursos estáticos verificados.");
+
+  const apiResponse = await fetch(host + "/api/golpes");
+  if (!apiResponse.ok) throw new Error("API respondeu " + apiResponse.status);
+  if (!(apiResponse.headers.get("content-type") || "").includes("application/json")) {
+    throw new Error("API não retornou JSON");
+  }
+  const golpes = await apiResponse.json();
+  if (golpes.length < 2 || !golpes.every((golpe) => golpe.id && golpe.orientacao)) {
+    throw new Error("JSON de golpes inválido");
+  }
+  console.log("OK /api/golpes");
+
+  for (const golpe of golpes) {
+    const response = await fetch(host + "/golpes/" + golpe.id);
+    if (!response.ok) throw new Error("Detalhe " + golpe.id + " respondeu " + response.status);
+    const html = await response.text();
+    if (!html.includes(golpe.titulo) || !html.includes(golpe.orientacao)) {
+      throw new Error("Detalhe incompleto para " + golpe.id);
+    }
+    console.log("OK /golpes/" + golpe.id);
+  }
+  const inexistente = await fetch(host + "/golpes/999999");
+  if (inexistente.status !== 404) throw new Error("ID inexistente não retornou 404");
+
+  console.log("Oito rotas, API JSON, rotas dinâmicas e recursos estáticos verificados.");
 } catch (error) {
   console.error(error);
   console.error(output);

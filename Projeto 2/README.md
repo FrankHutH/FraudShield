@@ -40,7 +40,7 @@ npm run dev
 ```
 
 Abra http://localhost:3000. **Todas as oito páginas** são renderizadas por rotas Next.js:
-`/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2` e `/contato`.
+`/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2` e `/contato`; existe também a rota dinâmica `/golpes/[id]`.
 
 Para testar a compilação de produção:
 
@@ -124,7 +124,7 @@ O código do diagrama também está salvo em [`docs/diagrama-componentes.mmd`](d
 
 ### Estado atual dos jogos
 
-Os jogos e o formulário usam temporariamente a lógica JavaScript original, carregada por `LegacyScripts` depois que a página é renderizada. A migração da lógica dos jogos para hooks React, a API local e as rotas dinâmicas continuam fora desta etapa.
+Os jogos e o formulário usam temporariamente a lógica JavaScript original, carregada por `LegacyScripts` depois que a página é renderizada. A lógica dos jogos permanece nos scripts originais. A API JSON e a rota dinâmica foram adicionadas para o check-in final.
 
 ### Transparência sobre IA
 
@@ -172,7 +172,7 @@ O ChatGPT (OpenAI) foi utilizado como apoio para adaptar o HTML/CSS, organizar o
 
 ## Publicação no AWS Amplify Hosting — Next.js 15 SSR, sem domínio
 
-A aplicação utiliza **Next.js 15.5.28** (correções de segurança de outubro/2026), React 19 e **Amplify Hosting compute**. A versão anterior exportava arquivos estáticos para `out/`; a versão atual usa `next build` e publica `.next/`. O modo SSR permite introduzir uma API interna Next.js nos próximos check-ins sem mudar de hospedagem. A API ainda não faz parte desta entrega.
+A aplicação utiliza **Next.js 15.5.28** (correções de segurança de outubro/2026), React 19 e **Amplify Hosting compute**. A versão anterior exportava arquivos estáticos para `out/`; a versão atual usa `next build` e publica `.next/`. O modo SSR permite introduzir uma API interna Next.js nos próximos check-ins sem mudar de hospedagem. A API local de exemplos de golpes faz parte do check-in final.
 
 ### Executar e testar localmente
 
@@ -201,8 +201,36 @@ O teste automatizado `test:smoke` inicia o servidor de produção Next.js e vali
 ### Notas
 
 - Os HTML/CSS e JS originais continuam preservados em `Projeto 1/`.
-- As oito rotas atuais são `/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2` e `/contato`.
+- As oito rotas fixas são `/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2` e `/contato`.
 - Os minijogos ainda usam scripts do Projeto 1 carregados pelo componente React `LegacyScripts`.
 - O uso de IA na preparação, refatoração, testes e configuração deve continuar declarado no README.
 - Não existe `package-lock.json` no repositório atual; por isso `amplify.yml` utiliza `npm install` em vez de `npm ci`. Para builds integralmente reprodutíveis, gerar e versionar um lockfile após validação em ambiente com acesso ao npm.
 
+
+## Check-in final — JSON, API e rota dinâmica (10/11/2026)
+
+A implementação é propositalmente simples, com recursos básicos do Next.js e React, sem banco de dados ou bibliotecas extras.
+
+1. **Dados:** `data/golpes.json` tem uma lista fixa de golpes, com `id`, `titulo`, `tipo`, `exemplo` e `orientacao`.
+2. **Back-end:** `app/api/golpes/route.js` atende `GET /api/golpes` e devolve essa lista com `Response.json(golpes)`.
+3. **Front-end:** `components/ListaGolpesAPI.jsx` usa `useEffect` para executar `fetch("/api/golpes")` ao abrir a página `/golpes`. `useState` guarda a lista e o erro. O React cria um cartão para cada item recebido.
+4. **Rota dinâmica:** ao clicar em “Ver como se proteger”, o site abre `/golpes/1`, `/golpes/2` etc. `app/golpes/[id]/page.jsx` procura o identificador no mesmo JSON e mostra os detalhes. Um ID inexistente retorna 404.
+
+### Como demonstrar ao professor
+
+Execute `npm run dev`, acesse `http://localhost:3000/golpes` e observe os cartões na seção **Mais exemplos de golpes**. Abra `http://localhost:3000/api/golpes` para ver o JSON recebido pelo navegador. Clique em um exemplo para abrir a rota dinâmica.
+
+### Testes automatizados
+
+Na pasta `Projeto 2`, execute:
+
+```bash
+npm install
+npm test
+npm run build
+npm run test:smoke
+```
+
+`npm test` verifica os arquivos do JSON, a rota de API, o consumo com hooks e a rota dinâmica. `test:smoke` inicia o servidor de produção, faz requisições HTTP reais à API e às páginas dinâmicas, verifica os dados retornados e confirma 404 para IDs inexistentes. Os testes anteriores continuam incluídos.
+
+**Limite:** o JSON é fixo e local. Não há cadastro, banco de dados ou salvamento remoto; isso não é necessário para demonstrar GET, fetch e rotas dinâmicas. O apoio do ChatGPT na implementação, nos testes e nesta documentação está declarado na seção de transparência.
