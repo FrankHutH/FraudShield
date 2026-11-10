@@ -1,8 +1,11 @@
 "use client";
+
 import { useState } from "react";
 import { ler, registrar, sortear } from "./pontuacao";
+
 const normalizar = (palavra) =>
   palavra.toLocaleLowerCase("pt-BR").replace(/[.,!?;:]/g, "");
+
 export default function JogoMensagens({ dados }) {
   const [rodada, setRodada] = useState(() => sortear(dados));
   const [numero, setNumero] = useState(1);
@@ -13,10 +16,12 @@ export default function JogoMensagens({ dados }) {
   const [pontosRodada, setPontosRodada] = useState(0);
   const [resultado, setResultado] = useState("");
   const [encerrado, setEncerrado] = useState(false);
+
   const mensagem = rodada[posicao];
   const palavras = mensagem.texto.split(" ");
   const sinais = mensagem.sinaisSuspeitos.map(normalizar);
   const ultima = posicao === rodada.length - 1;
+
   function verificar() {
     if (verificada) return;
     const corretas = palavras.filter(
@@ -42,12 +47,14 @@ export default function JogoMensagens({ dados }) {
         ".",
     );
   }
+
   function avancar() {
     setPosicao((i) => i + 1);
     setMarcadas([]);
     setVerificada(false);
     setResultado("");
   }
+
   function proxima() {
     setRodada(sortear(dados));
     setNumero((n) => n + 1);
@@ -58,6 +65,7 @@ export default function JogoMensagens({ dados }) {
     setResultado("");
     setEncerrado(false);
   }
+
   return (
     <>
       <section className="placar-jogo" aria-label="Placar">
@@ -69,6 +77,7 @@ export default function JogoMensagens({ dados }) {
           Recorde: {ler(2, "Recorde")}
         </p>
       </section>
+
       <section className="painel" aria-labelledby="mensagem-titulo">
         <h2 id="mensagem-titulo">Mensagem recebida</h2>
         <p className="mensagem-jogo">
@@ -119,6 +128,7 @@ export default function JogoMensagens({ dados }) {
           <li className="palavra-perdida">! Faltou</li>
         </ul>
       </section>
+
       <p className="resultado" role="status">
         {resultado}
         {verificada && ultima
