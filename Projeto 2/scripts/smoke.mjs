@@ -63,10 +63,18 @@ try {
     console.log("OK " + route);
   }
 
-  for (const asset of ["/img/logo.png", "/img/favicon.png", "/js/quiz1.js", "/js/quiz2.js"]) {
+  for (const asset of ["/img/logo.png", "/img/favicon.png"]) {
     const response = await fetch(host + asset);
     if (!response.ok) throw new Error("Recurso indisponível: " + asset);
     console.log("OK " + asset);
+  }
+
+
+  // Não deve existir nenhum script JavaScript legado público.
+  for (const asset of ["/js/quiz1.js", "/js/quiz2.js", "/js/progresso.js"]) {
+    const response = await fetch(host + asset);
+    if (response.status !== 404) throw new Error("Script legado ainda publicado: " + asset);
+    console.log("OK ausência " + asset);
   }
 
 

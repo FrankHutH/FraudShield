@@ -418,3 +418,14 @@ mark {
         font-size: 16px;
     }
 }
+
+/* Cabeçalho das páginas internas */
+.introducao {
+    max-width: 760px;
+    padding: 56px 0 16px;
+}
+
+.introducao > p:last-child {
+    font-size: 20px;
+}
+

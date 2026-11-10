@@ -1,55 +1,47 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import LegacyScripts from "./LegacyScripts";
+import JogoSituacoes from "./JogoSituacoes";
+import JogoMensagens from "./JogoMensagens";
 
-// Busca os dados do servidor antes de iniciar a lógica dos jogos.
-export default function CarregadorJogo({ url, nomeBanco, scripts }) {
-  const [dados, setDados] = useState(null);
-  const [erro, setErro] = useState("");
+// O React recebe o JSON exclusivamente por GET na API do Next.js.
+export default function CarregadorJogo({ tipo }) {
+  const [estado, setEstado] = useState({ status: "carregando", dados: [] });
   const [tentativa, setTentativa] = useState(0);
 
   useEffect(() => {
     const controlador = new AbortController();
+    setEstado({ status: "carregando", dados: [] });
 
-    fetch(url, { signal: controlador.signal })
+    fetch("/api/" + tipo, { signal: controlador.signal, cache: "no-store" })
       .then((resposta) => {
-        if (!resposta.ok) throw new Error("Erro ao buscar os dados");
+        if (!resposta.ok) throw new Error("Erro HTTP " + resposta.status);
         return resposta.json();
       })
-      .then((lista) => {
-        if (!Array.isArray(lista) || lista.length === 0) {
-          throw new Error("Dados inválidos");
-        }
-        setDados(lista);
+      .then((dados) => {
+        if (!Array.isArray(dados) || dados.length === 0) throw new Error("JSON inválido");
+        if (!controlador.signal.aborted) setEstado({ status: "pronto", dados });
       })
       .catch(() => {
-        if (!controlador.signal.aborted) {
-          setErro("Não foi possível carregar as perguntas do jogo.");
-        }
+        if (!controlador.signal.aborted) setEstado({ status: "erro", dados: [] });
       });
 
     return () => controlador.abort();
-  }, [url, tentativa]);
+  }, [tipo, tentativa]);
 
-  function tentarNovamente() {
-    setDados(null);
-    setErro("");
-    setTentativa((numero) => numero + 1);
-  }
-
-  if (erro) {
+  if (estado.status === "carregando") return <p role="status">Carregando perguntas do jogo...</p>;
+  if (estado.status === "erro") {
     return (
       <p role="alert">
-        {erro}{" "}
-        <button className="botao secundario" type="button" onClick={tentarNovamente}>
+        Não foi possível carregar as perguntas do jogo.{" "}
+        <button className="botao secundario" type="button" onClick={() => setTentativa((valor) => valor + 1)}>
           Tentar novamente
         </button>
       </p>
     );
   }
 
-  if (!dados) return <p role="status">Carregando perguntas do jogo...</p>;
-
-  return <LegacyScripts scripts={scripts} nomeBanco={nomeBanco} dados={dados} />;
+  return tipo === "situacoes"
+    ? <JogoSituacoes key={tentativa} dados={estado.dados} />
+    : <JogoMensagens key={tentativa} dados={estado.dados} />;
 }

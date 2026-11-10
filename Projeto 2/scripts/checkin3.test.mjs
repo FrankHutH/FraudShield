@@ -1,8 +1,6 @@
-// Murilo Lobato - RA: 10752958
-
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -10,7 +8,7 @@ const project = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const repository = resolve(project, "..");
 const read = (file) => readFileSync(join(project, file), "utf8");
 
-test("Next.js 15 usa versão corrigida e React 19", () => {
+test("Aplicação usa somente Next.js 15 e React 19 em produção", () => {
   const pkg = JSON.parse(read("package.json"));
   assert.equal(pkg.dependencies.next, "15.5.28");
   assert.match(pkg.dependencies.react, /^19\./);
@@ -19,33 +17,36 @@ test("Next.js 15 usa versão corrigida e React 19", () => {
   assert.equal(pkg.scripts.start, "next start");
 });
 
-test("SSR permanece habilitado para API futura", () => {
-  const config = read("next.config.mjs");
-  assert.doesNotMatch(config, /output\s*:\s*["']export["']/);
-  assert.match(config, /trailingSlash\s*:\s*true/);
+test("Next.js SSR permite as três rotas de API JSON", () => {
+  assert.doesNotMatch(read("next.config.mjs"), /output\s*:\s*["']export["']/);
+  for (const nome of ["situacoes", "mensagens", "golpes"]) {
+    assert.ok(existsSync(join(project, "app/api", nome, "route.js")));
+    assert.ok(existsSync(join(project, "data", nome + ".json")));
+  }
 });
 
-test("Amplify publica .next do monorepo e executa testes", () => {
+test("Amplify compila o Projeto 2 com SSR e executa testes", () => {
   const yaml = readFileSync(join(repository, "amplify.yml"), "utf8");
   assert.match(yaml, /appRoot:\s*['"]?Projeto 2/);
   assert.match(yaml, /baseDirectory:\s*\.next/);
   assert.match(yaml, /npm run build/);
   assert.match(yaml, /npm run test:smoke/);
-  assert.doesNotMatch(yaml, /baseDirectory:\s*out/);
 });
 
-test("oito páginas e recursos legados foram preservados", () => {
-  for (const segment of ["", "sobre", "golpes", "dicas", "quiz", "quiz1", "quiz2", "contato"]) {
-    assert.ok(existsSync(join(project, "app", segment, "page.jsx")), segment || "home");
+test("As oito páginas e imagens existem, mas os arquivos legados foram removidos", () => {
+  for (const rota of ["", "sobre", "golpes", "dicas", "quiz", "quiz1", "quiz2", "contato"]) {
+    assert.ok(existsSync(join(project, "app", rota, "page.jsx")), rota || "home");
   }
-  for (const asset of ["img/logo.png", "img/favicon.png", "js/quiz1.js", "js/quiz2.js"]) {
-    assert.ok(existsSync(join(project, "public", asset)), asset);
+  for (const imagem of ["logo.png", "favicon.png"]) {
+    assert.ok(existsSync(join(project, "public/img", imagem)));
   }
-  assert.ok(existsSync(join(repository, "Projeto 1", "README.md")));
+  assert.equal(existsSync(join(project, "public/js")), false);
+  assert.equal(existsSync(join(repository, "Projeto 1")), false);
 });
 
-test("teste de produção usa servidor Next.js, não servidor estático", () => {
+test("Testes HTTP usam o servidor real Next.js", () => {
   const smoke = read("scripts/smoke.mjs");
   assert.match(smoke, /next\/dist\/bin\/next/);
-  assert.doesNotMatch(smoke, /spawn\([^\n]+serve-static/);
+  assert.match(smoke, /api\/situacoes/);
+  assert.match(smoke, /api\/mensagens/);
 });

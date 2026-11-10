@@ -1,29 +1,10 @@
 # FraudShield
 
-Projeto educacional de prevenção a golpes digitais, voltado principalmente a pessoas idosas.
+Aplicação educativa para aprender a identificar golpes digitais. **Somente o Projeto 2 permanece:** Next.js 15 + React 19, com dois jogos e três APIs que servem dados de arquivos JSON.
 
->  A documentação **original e completa da primeira versão** foi movida para **[Projeto 1/README.md](Projeto%201/README.md)**. Este README principal apresenta a organização geral do repositório e os componentes do Projeto 2.
+## Iniciar
 
-## Versões
-
-- **[Projeto 1](Projeto%201/README.md)** — versão original em HTML, CSS e JavaScript, mantida sem alterações.
-- **[Projeto 2](Projeto%202/README.md)** — migração para React/Next.js com componentes de interface reutilizáveis e oito páginas.
-
-## Diagrama dos componentes — Projeto 2
-
-O diagrama abaixo mostra **quais componentes renderizam ou utilizam outros componentes** na aplicação Next.js. As setas representam essas relações, conforme os arquivos reais da pasta `Projeto 2/`.
-
-![Diagrama de componentes do FraudShield — Projeto 2](Projeto%202/docs/diagrama-componentes-plantuml.svg)
-
-[**Ver o diagrama SVG em tamanho original**](Projeto%202/docs/diagrama-componentes-plantuml.svg)
-
-**Como ler:** `app/layout.jsx` renderiza `Header`, o conteúdo da rota (`children`) e `Footer`. `Header` utiliza `Navbar` e `ThemeToggle`. As páginas Início, Sobre, Golpes, Dicas e Jogos reutilizam `Card`. As rotas Jogos e Contato utilizam `LegacyScripts` para carregar os scripts originais de `public/js/`.
-
-**Código-fonte:** [componentes React](Projeto%202/components/) · [layout do Next.js](Projeto%202/app/layout.jsx) · [diagrama editável](Projeto%202/docs/diagrama-componentes.mmd).
-
-## Rodar o Projeto 2
-
-Pré-requisito: Node.js 20.9 ou superior.
+É necessário Node.js 20.9+.
 
 ```bash
 cd "Projeto 2"
@@ -31,8 +12,29 @@ npm install
 npm run dev
 ```
 
-Acesse http://localhost:3000. Veja o tutorial e a declaração de uso de IA no README do Projeto 2.
+Acesse http://localhost:3000.
 
-## Deploy AWS Amplify (Next.js 15)
+## Testar
 
-O Projeto 2 está preparado para hospedagem SSR sem domínio próprio no AWS Amplify, por meio de `amplify.yml` na raiz deste repositório. Selecione `Projeto 2` como raiz do monorepo e consulte as instruções detalhadas no [README do Projeto 2](Projeto%202/README.md#publicação-no-aws-amplify-hosting--nextjs-15-ssr-sem-domínio).
+```bash
+cd "Projeto 2"
+npm test
+npm run build
+npm run test:smoke
+```
+
+## Como os jogos usam JSON
+
+- `data/situacoes.json` → `GET /api/situacoes` → `fetch()` no React → Fase 1.
+- `data/mensagens.json` → `GET /api/mensagens` → `fetch()` no React → Fase 2.
+- `data/golpes.json` → `GET /api/golpes` → `fetch()` no React → exemplos de golpes.
+
+Não há `public/js`, scripts injetados, arquivos HTML independentes ou questões duplicadas em JS. Os arquivos `.jsx` são componentes React; `.js` dos endpoints e `.mjs` de configuração, regras e testes são código necessário do projeto Next.js. Os arquivos `.css` restantes são **apenas estilos da aplicação Next.js**, sem páginas HTML legadas.
+
+**Documentação e relatório do check-in final:** [Projeto 2/README.md](Projeto%202/README.md) e [CheckIn3-Relatorio.md](Projeto%202/CheckIn3-Relatorio.md).
+
+## Publicação
+
+O `amplify.yml` publica o projeto `Projeto 2` como Next.js SSR no AWS Amplify. Configurar o appRoot como `Projeto 2`.
+
+**Uso de IA:** ChatGPT foi utilizado como apoio na implementação, migração, testes e documentação.

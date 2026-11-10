@@ -1,97 +1,45 @@
-# Check-in 3 — Relatório técnico do FraudShield
+# Relatório do Check-in 3 — FraudShield
 
-**Projeto 2 | Next.js 15, React 19, API JSON e rotas dinâmicas**
+**Projeto único: Next.js 15 + React 19.**
 
-## 1. Como o JSON é consumido?
+## Dados e APIs
 
-Os conteúdos ficam em três arquivos JSON dentro da pasta `data/`:
+| Dados | Quantidade | Endpoint GET | Interface React |
+|---|---:|---|---|
+| `data/situacoes.json` | 62 | `/api/situacoes` | Fase 1, `JogoSituacoes` |
+| `data/mensagens.json` | 55 | `/api/mensagens` | Fase 2, `JogoMensagens` |
+| `data/golpes.json` | 3 | `/api/golpes` | `ListaGolpesAPI` |
 
-| Arquivo | Uso |
-|---|---|
-| `data/situacoes.json` | 62 situações de "Golpe ou seguro?" (Fase 1) |
-| `data/mensagens.json` | 55 mensagens de "Encontre os sinais" (Fase 2) |
-| `data/golpes.json` | Exemplos de golpes e orientações na página /golpes |
+Os `route.js` do Next.js importam o arquivo JSON correspondente e respondem com `Response.json(dados)`, status 200 e tipo `application/json`. O React realiza a consulta com `fetch` dentro de `useEffect`, guarda a lista em `useState`, mostra loading/erro/retry e renderiza o jogo após receber os dados. Não utiliza arquivos JS de perguntas nem scripts inseridos no DOM.
 
-**Fluxo dos jogos:**
+## Componentes e regras
 
-`JSON → Route Handler do Next.js → resposta HTTP GET → fetch() em useEffect() → useState() do React → lógica do jogo → interface`
+- `RootLayout`: renderiza o cabeçalho, rota atual e rodapé comuns.
+- `CarregadorJogo`: consulta as APIs, valida o array e gerencia carregamento e falha.
+- `JogoSituacoes`: classifica quatro situações por rodada (botões ou arrastar).
+- `JogoMensagens`: seleciona e corrige palavras suspeitas em quatro mensagens por rodada, incluindo mensagens sem sinais.
+- `lib/jogos.mjs`: sorteio, acerto/erro e normalização das palavras.
+- `lib/progresso.mjs` e `PlacarJogos`: pontuação, recordes e conclusão salvos localmente; cada acerto completo vale 10 pontos.
+- `ListaGolpesAPI`: consulta `/api/golpes` e liga à rota dinâmica `/golpes/[id]`; IDs inválidos retornam 404.
+- `FormContato`: formulário local que copia mensagem, sem envio.
 
-O navegador não lê arquivos da pasta `data/` diretamente. Ao abrir o jogo, `CarregadorJogo.jsx` usa `fetch()` para consultar a API. O React guarda a lista em `useState()`. Somente depois de receber uma lista válida, o componente disponibiliza os dados aos scripts do jogo, preservados da versão anterior.
+**Fluxo:** `JSON → API Next.js → HTTP GET → fetch/useEffect → useState React → jogo React`.
 
-Durante a requisição há uma mensagem de carregamento. Se houver erro HTTP, JSON inválido ou falha de conexão, o usuário vê uma mensagem de erro e um botão "Tentar novamente". A Fase 2 inicia com "Verificar" desabilitado até os dados estarem prontos.
-
-## 2. Como a API foi implementada?
-
-Foi utilizada a pasta `app/api/` do Next.js, sem bibliotecas de terceiros e sem banco de dados.
-
-| Endpoint | Arquivo | Resposta |
-|---|---|---|
-| `GET /api/situacoes` | `app/api/situacoes/route.js` | Lista de situações |
-| `GET /api/mensagens` | `app/api/mensagens/route.js` | Lista de mensagens |
-| `GET /api/golpes` | `app/api/golpes/route.js` | Lista de golpes |
-
-Cada rota importa seu JSON no servidor e responde usando `Response.json(dados)`, que envia status 200 e o cabeçalho `Content-Type: application/json`. Os arquivos JSON são fixos, incorporados ao build; não existe edição em tempo real nem API POST.
-
-## 3. Componentes de servidor e cliente
-
-| Componente | Ambiente | Responsabilidade |
-|---|---|---|
-| `RootLayout`, `Header`, `Footer`, `Card` | Servidor | Estrutura comum, layout e cartões |
-| `Navbar`, `ThemeToggle` | Cliente | Navegação ativa e tema |
-| `ListaGolpesAPI` | Cliente | Consulta `/api/golpes`, mostra cartões |
-| `CarregadorJogo` | Cliente | Consulta as APIs dos jogos com `fetch`, `useEffect` e `useState` |
-| `LegacyScripts` | Cliente | Carrega a lógica existente depois que o React recebeu os dados |
-| `app/api/*/route.js` | Servidor | Responde a consultas HTTP GET |
-| `app/golpes/[id]/page.jsx` | Servidor | Mostra um golpe por ID, ou página 404 |
-
-A lógica de interação e pontuação de `public/js/quiz1.js` e `quiz2.js` foi mantida. Os bancos antigos `public/js/dados/situacoes.js` e `mensagens.js` foram eliminados para evitar dados duplicados.
-
-## 4. Como os componentes estão conectados?
-
-`RootLayout → Header + Página + Footer`
-
-`Header → Navbar + ThemeToggle`
-
-`/quiz1 → CarregadorJogo → GET /api/situacoes → data/situacoes.json`
-
-`/quiz2 → CarregadorJogo → GET /api/mensagens → data/mensagens.json`
-
-`CarregadorJogo → LegacyScripts → public/js/quiz1.js ou quiz2.js`
-
-`/golpes → ListaGolpesAPI → GET /api/golpes → data/golpes.json`
-
-O React controla os estados de carregamento, sucesso e erro. Os scripts dos jogos geram cartões, verificam respostas e salvam pontos no `localStorage` somente após o carregamento.
-
-## 5. Rotas existentes
-
-Páginas fixas: `/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2`, `/contato`.
-
-Rota dinâmica: `/golpes/[id]`, por exemplo `/golpes/1`. O ID é usado para localizar o item em `data/golpes.json`; IDs inexistentes retornam 404.
-
-Rotas API: `/api/situacoes`, `/api/mensagens`, `/api/golpes`.
-
-## 6. Responsabilidades e persistência
-
-- **Back-end:** importa os JSONs e devolve respostas HTTP por rotas GET.
-- **React:** busca os dados, guarda o estado e apresenta carregamento ou erro.
-- **JavaScript dos jogos:** sorteia itens carregados, avalia as respostas e atualiza o placar.
-- **Persistência:** `localStorage` armazena pontuação, recordes e conclusão das fases no próprio navegador.
-
-Não há banco de dados, cadastro de usuários nem endpoints para gravar novas questões. Isso não é necessário para demonstrar a API JSON fixa do check-in.
-
-## 7. Testes automatizados e demonstração
-
-Na pasta `Projeto 2`, execute:
+## Testar e demonstrar
 
 ```bash
+cd "Projeto 2"
 npm install
 npm test
 npm run build
 npm run test:smoke
+npm run dev
 ```
 
-`npm test` verifica estrutura, formatos dos JSONs, consistência dos sinais, ligação dos componentes React e preservação da pontuação. `test:smoke` inicia um servidor real de produção, consulta as três APIs via HTTP, compara seus retornos com os JSONs, acessa as páginas e verifica a rota dinâmica e a resposta 404.
+Abra `/api/situacoes`, `/api/mensagens`, `/api/golpes` e depois `/quiz1`, `/quiz2`, `/golpes` e `/golpes/1`. Os testes verificam o formato, a integridade dos JSONs, regras, pontuação, rotas e respostas HTTP reais. Interações visuais em navegador não estão integralmente cobertas por esses testes.
 
-Para apresentar: abra `/api/situacoes`, `/api/mensagens` e `/api/golpes`, depois navegue para `/quiz1`, `/quiz2` e `/golpes`. A consulta dos jogos ocorre no carregamento da página, sem dados duplicados no JavaScript.
+## Escopo
 
-**Apoio de IA:** o ChatGPT foi utilizado para auxiliar na migração e documentação. A implementação e suas decisões devem ser compreendidas e explicadas durante a apresentação.
+Não há banco de dados, POST, autenticação ou edição online das perguntas. Os arquivos JSON são importados durante o build; para alterar o conteúdo em produção é necessário fazer novo build e deploy.
+
+A estrutura legada do Projeto 1 e os scripts `public/js` foram removidos. A aplicação utiliza somente Next.js/React para as páginas e interações; CSS é usado apenas para aparência. A implementação e a documentação tiveram apoio de IA (ChatGPT/OpenAI).
