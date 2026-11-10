@@ -1,6 +1,5 @@
 // Murilo Lobato - RA: 10752958
 
-import "../../styles/pages/dicas.css";
 import Card from "../../components/Card";
 
 export const metadata = {
@@ -11,7 +10,7 @@ export const metadata = {
 export default function Page() {
   return (
     <>
-<main>
+<main className="pagina-dicas">
                   <header className="introducao">
                       <h1>Seis hábitos que atrapalham qualquer golpista</h1>
                       <p>Não precisa entender de tecnologia. Precisa só de um pouco de desconfiança e destes seis costumes.</p>

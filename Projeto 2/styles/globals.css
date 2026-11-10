@@ -418,3 +418,369 @@ mark {
         font-size: 16px;
     }
 }
+
+
+/* Estilos específicos das páginas e dos dois jogos React. */
+
+.introducao {
+    max-width: 760px;
+    padding: 56px 0 16px;
+}
+
+.introducao > p:last-child {
+    font-size: 20px;
+}
+
+.sobre {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: center;
+    gap: 40px;
+}
+
+blockquote {
+    margin: 4px;
+}
+
+.lema {
+    margin: 0;
+    font-family: var(--pixel);
+    font-size: 22px;
+    line-height: 1.8;
+    color: var(--titulo);
+}
+
+.lema em {
+    color: var(--primaria);
+    font-style: normal;
+}
+
+.fala {
+    padding: 12px 16px;
+    border-left: 8px solid var(--ciano);
+    background-color: var(--destaque);
+    font-style: italic;
+    color: var(--titulo);
+}
+
+summary {
+    color: var(--primaria);
+    font-family: var(--pixel);
+    font-size: 11px;
+    line-height: 1.6;
+    cursor: pointer;
+}
+
+details p {
+    margin-top: 12px;
+}
+
+.pagina-dicas .cartoes {grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));}
+
+.placar-geral {
+    margin-top: 16px;
+    color: #c3d0ea;
+    background-color: var(--marinho);
+}
+
+.placar-geral h2 {
+    color: #ffffff;
+}
+
+.pontuacao-total {
+    margin: 0 0 16px;
+    color: var(--ciano);
+    font-family: var(--pixel);
+    font-size: 32px;
+}
+
+progress {
+    width: 100%;
+    height: 24px;
+    border: 4px solid #ffffff;
+    background-color: var(--marinho);
+    appearance: none;
+}
+
+progress::-webkit-progress-bar {
+    background-color: var(--marinho);
+}
+
+progress::-webkit-progress-value {
+    background: repeating-linear-gradient(90deg, var(--ciano) 0 12px, transparent 12px 16px);
+}
+
+progress::-moz-progress-bar {
+    background: repeating-linear-gradient(90deg, var(--ciano) 0 12px, transparent 12px 16px);
+}
+
+.status-jogos {
+    padding: 0;
+    list-style: none;
+}
+
+.status-jogos li {
+    padding: 8px 0;
+    border-bottom: 2px dashed #2d4a85;
+}
+
+.placar-geral .secundario {
+    color: #ffffff;
+    background-color: transparent;
+    box-shadow: 0 -4px #ffffff, 0 4px #ffffff, -4px 0 #ffffff, 4px 0 #ffffff;
+}
+
+.aviso {
+    padding: 16px;
+    margin-top: 28px;
+    border-left: 8px solid var(--ciano);
+    background-color: var(--destaque);
+}
+
+.voltar {
+    display: inline-block;
+    margin-top: 28px;
+    font-family: var(--pixel);
+    font-size: 11px;
+}
+
+.placar-jogo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 4px 28px;
+}
+
+.placar-jogo p {
+    flex: 1 1 280px;
+    margin: 0;
+    padding: 14px 16px;
+    color: #ffffff;
+    background-color: var(--marinho);
+    box-shadow: var(--caixa);
+    font-family: var(--pixel);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.placar-jogo .placar {
+    color: var(--ciano);
+}
+
+.resultado {
+    padding: 24px;
+    margin: 28px 4px;
+    box-shadow: var(--caixa);
+}
+
+.resultado:empty {
+    display: none;
+}
+
+.resultado strong {
+    display: block;
+    margin-bottom: 12px;
+    font-family: var(--pixel);
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.resultado span {
+    display: block;
+    margin-top: 8px;
+}
+
+.resultado-correto, .cartao-situacao.cartao-correto {
+    color: #145534;
+    background-color: #e6f8ec;
+    box-shadow: 0 -4px #20704c, 0 4px #20704c, -4px 0 #20704c, 4px 0 #20704c;
+}
+
+.resultado-incorreto, .cartao-situacao.cartao-incorreto {
+    color: #8c2435;
+    background-color: #fff0f1;
+    box-shadow: 0 -4px #ae3446, 0 4px #ae3446, -4px 0 #ae3446, 4px 0 #ae3446;
+}
+
+.resultado-resumo {
+    color: var(--titulo);
+    background-color: var(--destaque);
+}
+
+.resumo-rodada {
+    font-weight: bold;
+}
+
+.cartao-situacao {
+    margin: 4px;
+    background-color: var(--superficie);
+    box-shadow: var(--caixa), 8px 8px 0 var(--sombra);
+    cursor: grab;
+}
+
+.selecionar-cartao {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    color: var(--titulo);
+    background-color: transparent;
+    font-weight: bold;
+    text-align: left;
+}
+
+.cartao-selecionado {
+    background-color: var(--destaque);
+    box-shadow: 0 -4px var(--ciano), 0 4px var(--ciano), -4px 0 var(--ciano), 4px 0 var(--ciano), 8px 8px 0 var(--sombra);
+    transform: translateY(-4px);
+}
+
+.cartao-selecionado .selecionar-cartao::before {
+    content: "▶ ";
+    color: var(--primaria);
+}
+
+.categorias {
+    margin-top: 36px;
+}
+
+.categoria {
+    padding: 20px;
+    border: 4px dashed var(--borda);
+}
+
+.golpe {
+    background-color: rgba(174, 52, 70, 0.08);
+}
+
+.seguro {
+    background-color: rgba(32, 112, 76, 0.08);
+}
+
+.lista-classificados {
+    padding: 0;
+    list-style: none;
+}
+
+.lista-classificados li {
+    margin-top: 20px;
+    cursor: default;
+}
+
+.feedback-cartao {
+    margin: 0;
+    padding: 0 18px 16px;
+}
+
+.rotulo-resposta {
+    display: block;
+    font-family: var(--pixel);
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.cartao-correto .selecionar-cartao, .cartao-incorreto .selecionar-cartao {
+    color: inherit;
+}
+
+.mensagem-jogo {
+    padding: 20px;
+    background-color: var(--destaque);
+    font-size: 20px;
+}
+
+.palavra-mensagem {
+    min-height: 44px;
+    padding: 4px 6px;
+    margin: 2px 0;
+    border: 3px solid transparent;
+    color: var(--titulo);
+    background-color: transparent;
+}
+
+.palavra-mensagem:hover:enabled {
+    border-color: var(--borda);
+}
+
+.palavra-selecionada {
+    color: var(--marinho);
+    background-color: var(--ciano);
+    border-color: var(--marinho);
+}
+
+.palavra-correta {
+    color: #ffffff;
+    background-color: #17613d;
+}
+
+.palavra-incorreta {
+    color: #ffffff;
+    background-color: #a3293d;
+}
+
+.palavra-perdida {
+    color: #724609;
+    background-color: #fff3d8;
+    border: 3px dashed #956119;
+}
+
+.legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0;
+    margin: 16px 0 0;
+    list-style: none;
+    font-family: var(--pixel);
+    font-size: 10px;
+}
+
+.legenda li {
+    padding: 6px 10px;
+}
+
+.contato {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: start;
+    gap: 36px;
+}
+
+.passos {
+    padding-left: 24px;
+}
+
+.passos li {
+    margin-bottom: 12px;
+}
+
+label {
+    display: block;
+    margin: 20px 0 8px;
+    color: var(--titulo);
+    font-family: var(--pixel);
+    font-size: 11px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 4px solid var(--borda);
+    font: inherit;
+    color: var(--titulo);
+    background-color: var(--superficie);
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--ciano);
+}
+
+textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+small {
+    display: block;
+    margin: 6px 0 12px;
+}

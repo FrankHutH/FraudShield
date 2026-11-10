@@ -1,6 +1,5 @@
 // Murilo Lobato - RA: 10752958
 
-import "../../styles/pages/golpes.css";
 import Card from "../../components/Card";
 import ListaGolpesAPI from "../../components/ListaGolpesAPI";
 

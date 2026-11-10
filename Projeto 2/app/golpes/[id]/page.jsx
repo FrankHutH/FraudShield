@@ -1,7 +1,5 @@
 import { notFound } from "next/navigation";
 import golpes from "../../../data/golpes.json";
-import "../../../styles/pages/golpes.css";
-
 export function generateStaticParams() {
   return golpes.map((golpe) => ({ id: String(golpe.id) }));
 }

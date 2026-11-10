@@ -14,7 +14,7 @@ Abra http://localhost:3000.
 - `app/`: rotas Next.js, incluindo as oito páginas e `/api/golpes`, `/api/situacoes`, `/api/mensagens`.
 - `data/`: arquivos JSON que são a fonte única de dados. Não há bancos duplicados em JavaScript.
 - `components/`: interface e jogos React (`JogoSituacoes`, `JogoMensagens`, `Placar`, `ContatoForm`).
-- `styles/`: CSS utilizado pelos componentes Next.js. Não existe site HTML/CSS/JS independente.
+- `styles/globals.css`: único arquivo de estilos do Next.js, sem duplicação por página. Não existe site HTML/CSS/JS independente.
 - `public/img/`: imagens compartilhadas.
 
 ## Como os jogos consomem JSON

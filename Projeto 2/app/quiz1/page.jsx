@@ -1,5 +1,4 @@
 import CarregadorJogo from "../../components/CarregadorJogo";
-import "../../styles/pages/quiz1.css";
 export const metadata = { title: "Golpe ou seguro? | FraudShield" };
 export default function Page() { return <main>
   <a className="voltar" href="/quiz">← Voltar aos jogos</a>

@@ -70,6 +70,11 @@ try {
   }
 
 
+  for (const antigo of ["/js/quiz1.js", "/js/quiz2.js"]) {
+    const resposta = await fetch(host + antigo);
+    if (resposta.status !== 404) throw new Error("Script legado acessível: " + antigo);
+  }
+
   const apiResponse = await fetch(host + "/api/golpes");
   if (!apiResponse.ok) throw new Error("API respondeu " + apiResponse.status);
   if (!(apiResponse.headers.get("content-type") || "").includes("application/json")) {

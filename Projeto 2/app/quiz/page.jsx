@@ -1,7 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
 import Placar from "../../components/Placar";
-import "../../styles/pages/quiz.css";
 import Card from "../../components/Card";
 
 export const metadata = {

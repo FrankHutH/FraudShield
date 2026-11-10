@@ -1,5 +1,4 @@
 import CarregadorJogo from "../../components/CarregadorJogo";
-import "../../styles/pages/quiz2.css";
 export const metadata = { title: "Encontre os sinais | FraudShield" };
 export default function Page() { return <main>
   <a className="voltar" href="/quiz">← Voltar aos jogos</a>

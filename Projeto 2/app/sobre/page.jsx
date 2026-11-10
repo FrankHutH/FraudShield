@@ -1,6 +1,5 @@
 // Murilo Lobato - RA: 10752958
 
-import "../../styles/pages/sobre.css";
 import Card from "../../components/Card";
 
 export const metadata = {

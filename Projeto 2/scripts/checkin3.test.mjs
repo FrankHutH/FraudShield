@@ -16,3 +16,11 @@ test("as duas fases recebem a API e renderizam componentes React",()=>{
   assert.match(read("components/CarregadorJogo.jsx"), /fetch\(url/);
   assert.match(read("components/CarregadorJogo.jsx"), /<JogoSituacoes dados=\{dados\}/);
 });
+
+test("CSS é único no Next.js; nenhuma página usa CSS legado duplicado",()=>{
+  assert.ok(existsSync(new URL("../styles/globals.css",import.meta.url)));
+  assert.equal(existsSync(new URL("../styles/pages",import.meta.url)),false);
+  for(const pagina of ["quiz","quiz1","quiz2","contato","dicas","golpes","sobre"]){
+    assert.doesNotMatch(read("app/"+pagina+"/page.jsx"), /styles\/pages/);
+  }
+});

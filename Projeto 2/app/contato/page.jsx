@@ -1,8 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
 import ContatoForm from "../../components/ContatoForm";
-import "../../styles/pages/contato.css";
-
 export const metadata = {
   title: "Contato | FraudShield",
   description: "Mande uma dúvida ou sugestão para o FraudShield."
