@@ -3,11 +3,14 @@
 
 import { useEffect } from "react";
 
-export default function LegacyScripts({ scripts }) {
+export default function LegacyScripts({ scripts, nomeBanco, dados }) {
   const chave = scripts.join("|");
 
   useEffect(() => {
     if (!chave) return;
+
+    // A fonte das perguntas é o JSON recebido pelo React, não um arquivo JS.
+    if (nomeBanco) window[nomeBanco] = dados;
 
     window.__fraudshieldInicializados ??= {};
     if (window.__fraudshieldInicializados[chave]) return;
@@ -27,7 +30,7 @@ export default function LegacyScripts({ scripts }) {
     }
 
     carregar().catch((erro) => console.error("FraudShield:", erro));
-  }, [chave]);
+  }, [chave, nomeBanco, dados]);
 
   return null;
 }
