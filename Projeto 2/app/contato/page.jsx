@@ -3,42 +3,52 @@
 import ContatoForm from "../../components/ContatoForm";
 export const metadata = {
   title: "Contato | FraudShield",
-  description: "Mande uma dúvida ou sugestão para o FraudShield."
+  description: "Mande uma dúvida ou sugestão para o FraudShield.",
 };
 
 export default function Page() {
   return (
     <>
-<main>
-                  <header className="introducao">
-                      <h1>Fale com a gente</h1>
-                      <p>Viu um golpe que não está aqui? Tem uma sugestão? Escreva.</p>
-                  </header>
+      <main>
+        <header className="introducao">
+          <h1>Fale com a gente</h1>
+          <p>Viu um golpe que não está aqui? Tem uma sugestão? Escreva.</p>
+        </header>
 
-                  <section className="contato" aria-label="Orientações e formulário de contato">
-                      <aside className="painel painel-azul">
-                          <h2>Recebeu algo estranho agora?</h2>
+        <section
+          className="contato"
+          aria-label="Orientações e formulário de contato"
+        >
+          <aside className="painel painel-azul">
+            <h2>Recebeu algo estranho agora?</h2>
 
-                          <ol className="passos">
-                              <li>Não mande dinheiro nem dados.</li>
-                              <li>Ligue para a pessoa ou empresa por um número que você já conhece.</li>
-                              <li>Não passe senha nem código.</li>
-                              <li>Já fez o Pix? Ligue na hora para o seu banco, pelo número atrás do cartão.</li>
-                          </ol>
+            <ol className="passos">
+              <li>Não mande dinheiro nem dados.</li>
+              <li>
+                Ligue para a pessoa ou empresa por um número que você já
+                conhece.
+              </li>
+              <li>Não passe senha nem código.</li>
+              <li>
+                Já fez o Pix? Ligue na hora para o seu banco, pelo número atrás
+                do cartão.
+              </li>
+            </ol>
 
-                          <a href="/dicas">Ver todas as dicas</a>
-                      </aside>
+            <a href="/dicas">Ver todas as dicas</a>
+          </aside>
 
-                      <article className="painel">
-                          <h2>Sua mensagem</h2>
-                          <p>Este formulário é de demonstração: ele monta o texto para você copiar, mas não envia nada.</p>
+          <article className="painel">
+            <h2>Sua mensagem</h2>
+            <p>
+              Este formulário é de demonstração: ele monta o texto para você
+              copiar, mas não envia nada.
+            </p>
 
-                          <ContatoForm />
-                      </article>
-                  </section>
-              </main>
-
-
+            <ContatoForm />
+          </article>
+        </section>
+      </main>
     </>
   );
 }

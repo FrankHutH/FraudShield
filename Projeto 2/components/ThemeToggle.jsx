@@ -7,9 +7,16 @@ export default function ThemeToggle() {
   const [tema, setTema] = useState("claro");
 
   useEffect(() => {
-    const prefereEscuro = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const prefereEscuro = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    ).matches;
     const salvo = window.localStorage.getItem("tema");
-    const inicial = salvo === "claro" || salvo === "escuro" ? salvo : prefereEscuro ? "escuro" : "claro";
+    const inicial =
+      salvo === "claro" || salvo === "escuro"
+        ? salvo
+        : prefereEscuro
+          ? "escuro"
+          : "claro";
     setTema(inicial);
     document.documentElement.dataset.tema = inicial;
   }, []);
@@ -22,8 +29,13 @@ export default function ThemeToggle() {
   }
 
   return (
-    <button className="alternar-tema" id="alternarTema" type="button"
-      aria-pressed={tema === "escuro"} onClick={alternarTema}>
+    <button
+      className="alternar-tema"
+      id="alternarTema"
+      type="button"
+      aria-pressed={tema === "escuro"}
+      onClick={alternarTema}
+    >
       {tema === "escuro" ? "☀ Claro" : "☾ Escuro"}
     </button>
   );

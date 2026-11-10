@@ -8,7 +8,9 @@ export default function Header() {
     <header className="cabecalho-principal">
       <a className="marca" href="/" aria-label="FraudShield — início">
         <img src="/img/logo.png" alt="" />
-        <span>Fraud<b>Shield</b></span>
+        <span>
+          Fraud<b>Shield</b>
+        </span>
       </a>
       <Navbar />
       <ThemeToggle />
