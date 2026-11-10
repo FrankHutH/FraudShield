@@ -83,7 +83,9 @@ Projeto 2/
 ├── app/                  oito rotas (/, /sobre, /golpes, /dicas,
 │                         /quiz, /quiz1, /quiz2, /contato)
 │   └── layout.jsx        estrutura compartilhada das oito páginas
+├── data/                 golpes.json, situacoes.json e mensagens.json
 ├── components/
+│   ├── CarregadorJogo.jsx React: fetch dos jogos, loading/erro/retry
 │   ├── Header.jsx        logotipo, menu e botão de tema
 │   ├── Navbar.jsx        menu com rota ativa
 │   ├── Footer.jsx        rodapé comum às páginas
@@ -124,7 +126,7 @@ O código do diagrama também está salvo em [`docs/diagrama-componentes.mmd`](d
 
 ### Estado atual dos jogos
 
-Os jogos e o formulário usam temporariamente a lógica JavaScript original, carregada por `LegacyScripts` depois que a página é renderizada. A lógica dos jogos permanece nos scripts originais. A API JSON e a rota dinâmica foram adicionadas para o check-in final.
+Os jogos continuam usando a lógica de interação e pontuação original, mas **não usam mais arrays de perguntas embutidos em JavaScript**. O componente React `CarregadorJogo` chama `/api/situacoes` e `/api/mensagens` usando `fetch()` em `useEffect()`, guarda os dados em `useState()` e só então inicia os scripts legados via `LegacyScripts`. Os exemplos da página Golpes usam `/api/golpes` e a rota dinâmica `/golpes/[id]`.
 
 ### Transparência sobre IA
 
@@ -147,7 +149,7 @@ O ChatGPT (OpenAI) foi utilizado como apoio para adaptar o HTML/CSS, organizar o
 
 **`feedback.js`** — `criarElemento()`, `mostrarResultado()` (escreve em `role="status"`) e `destacarResultado()` (move o foco), usados pelos dois jogos.
 
-**`js/dados/*.js`** — só listas de objetos (texto + resposta/sinais). Adicionar conteúdo = adicionar um item na lista, nada mais.
+**`data/situacoes.json` e `data/mensagens.json`** — listas únicas das perguntas e sinais dos jogos. Os arquivos são lidos pelas APIs GET do Next.js, não diretamente pelo navegador. `public/js/dados/feedback.js` mantém apenas as frases de incentivo do jogo.
 
 **`quiz1.js`** — cartões sorteados de `bancoSituacoes`; cada um é arrastável e também um `<button>` (acessível por teclado); `classificar()` roda no clique ou no `drop`; some pontos e marca conclusão ao fim da rodada.
 
@@ -215,10 +217,12 @@ A implementação é propositalmente simples, com recursos básicos do Next.js e
 2. **Back-end:** `app/api/golpes/route.js` atende `GET /api/golpes` e devolve essa lista com `Response.json(golpes)`.
 3. **Front-end:** `components/ListaGolpesAPI.jsx` usa `useEffect` para executar `fetch("/api/golpes")` ao abrir a página `/golpes`. `useState` guarda a lista e o erro. O React cria um cartão para cada item recebido.
 4. **Rota dinâmica:** ao clicar em “Ver como se proteger”, o site abre `/golpes/1`, `/golpes/2` etc. `app/golpes/[id]/page.jsx` procura o identificador no mesmo JSON e mostra os detalhes. Um ID inexistente retorna 404.
+5. **API dos jogos:** `data/situacoes.json` contém as 62 situações da Fase 1 e `data/mensagens.json` contém as 55 mensagens da Fase 2. Os arquivos `app/api/situacoes/route.js` e `app/api/mensagens/route.js` expõem `GET /api/situacoes` e `GET /api/mensagens`.
+6. **Consumo pelo React:** `components/CarregadorJogo.jsx` utiliza `fetch()`, `useEffect()` e `useState()`, trata erros e oferece um botão de nova tentativa. Só quando o JSON chega os scripts dos jogos são iniciados; as regras de acerto, pontuação e recorde foram preservadas. Não existem mais duas cópias das perguntas.
 
 ### Como demonstrar ao professor
 
-Execute `npm run dev`, acesse `http://localhost:3000/golpes` e observe os cartões na seção **Mais exemplos de golpes**. Abra `http://localhost:3000/api/golpes` para ver o JSON recebido pelo navegador. Clique em um exemplo para abrir a rota dinâmica.
+Execute `npm run dev` e abra `http://localhost:3000/api/situacoes`, `http://localhost:3000/api/mensagens` e `http://localhost:3000/api/golpes`. Depois entre em `/quiz1` e `/quiz2` e explique que o React chama as duas primeiras APIs antes de iniciar os jogos. Na página `/golpes`, os cartões são trazidos da terceira API e cada link abre uma rota dinâmica.
 
 ### Testes automatizados
 
@@ -231,6 +235,6 @@ npm run build
 npm run test:smoke
 ```
 
-`npm test` verifica os arquivos do JSON, a rota de API, o consumo com hooks e a rota dinâmica. `test:smoke` inicia o servidor de produção, faz requisições HTTP reais à API e às páginas dinâmicas, verifica os dados retornados e confirma 404 para IDs inexistentes. Os testes anteriores continuam incluídos.
+`npm test` verifica os três arquivos JSON, as três APIs, o consumo com hooks, a integridade das 62 situações e 55 mensagens, a ligação dos jogos aos dados e a rota dinâmica. `test:smoke` inicia o servidor Next.js de produção, consulta as três APIs por HTTP real, compara o retorno com seus respectivos JSONs, testa as páginas e confirma 404 para IDs inexistentes. Os testes anteriores continuam incluídos.
 
-**Limite:** o JSON é fixo e local. Não há cadastro, banco de dados ou salvamento remoto; isso não é necessário para demonstrar GET, fetch e rotas dinâmicas. O apoio do ChatGPT na implementação, nos testes e nesta documentação está declarado na seção de transparência.
+**Limite:** os JSONs são fixos e locais, incorporados à compilação do Next.js. Não há cadastro, banco de dados ou salvamento remoto; isso não é necessário para demonstrar GET, fetch e rotas dinâmicas. Excluir o JSON antes de recompilar quebra o import e o build. O apoio do ChatGPT na implementação, nos testes e nesta documentação está declarado na seção de transparência.

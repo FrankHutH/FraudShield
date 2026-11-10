@@ -1,85 +1,97 @@
-# Relatório Técnico — FraudShield
-**Arquitetura, componentes, rotas e implementação da API**
+# Check-in 3 — Relatório técnico do FraudShield
 
-## 1. Como o JSON será consumido?
+**Projeto 2 | Next.js 15, React 19, API JSON e rotas dinâmicas**
 
-Fluxo de execução:
+## 1. Como o JSON é consumido?
 
-`Arquivo JSON → API Next.js → HTTP GET → fetch() → useState() → Interface React`
+Os conteúdos ficam em três arquivos JSON dentro da pasta `data/`:
 
-- **Servidor:** lê os dados do arquivo JSON e os disponibiliza por um endpoint.
-- **Front-end:** utiliza `fetch()` dentro de `useEffect()` para solicitar os dados.
-- **React:** armazena o retorno em `useState()` e atualiza a interface.
-- **Tratamento de erros:** verifica o status HTTP e apresenta mensagens de carregamento ou falha.
-
-A API retornará `Content-Type: application/json`, com status HTTP adequados.
-
-## 2. Como a API será implementada?
-
-A implementação seguirá a arquitetura de Route Handlers do Next.js.
-
-| Arquivo | Responsabilidade |
+| Arquivo | Uso |
 |---|---|
-| `data/situacoes.json` | Dados das situações dos jogos |
-| `data/mensagens.json` | Mensagens e sinais suspeitos |
-| `app/api/situacoes/route.js` | Endpoint `GET /api/situacoes` |
-| `app/api/mensagens/route.js` | Endpoint `GET /api/mensagens` |
-| `components/` | Componentes que consomem a API e exibem os dados |
+| `data/situacoes.json` | 62 situações de "Golpe ou seguro?" (Fase 1) |
+| `data/mensagens.json` | 55 mensagens de "Encontre os sinais" (Fase 2) |
+| `data/golpes.json` | Exemplos de golpes e orientações na página /golpes |
 
-O JSON ficará centralizado no servidor, separado dos componentes visuais.
+**Fluxo dos jogos:**
 
-## 3. Quais componentes executam no servidor e no cliente?
+`JSON → Route Handler do Next.js → resposta HTTP GET → fetch() em useEffect() → useState() do React → lógica do jogo → interface`
 
-| Componente | Ambiente | Função |
+O navegador não lê arquivos da pasta `data/` diretamente. Ao abrir o jogo, `CarregadorJogo.jsx` usa `fetch()` para consultar a API. O React guarda a lista em `useState()`. Somente depois de receber uma lista válida, o componente disponibiliza os dados aos scripts do jogo, preservados da versão anterior.
+
+Durante a requisição há uma mensagem de carregamento. Se houver erro HTTP, JSON inválido ou falha de conexão, o usuário vê uma mensagem de erro e um botão "Tentar novamente". A Fase 2 inicia com "Verificar" desabilitado até os dados estarem prontos.
+
+## 2. Como a API foi implementada?
+
+Foi utilizada a pasta `app/api/` do Next.js, sem bibliotecas de terceiros e sem banco de dados.
+
+| Endpoint | Arquivo | Resposta |
 |---|---|---|
-| `RootLayout` | Servidor | Estrutura compartilhada |
-| `Header` | Servidor | Cabeçalho |
-| `Footer` | Servidor | Rodapé |
-| `Card` | Servidor | Cartões reutilizáveis |
-| `Navbar` | Cliente | Navegação e rota ativa |
-| `ThemeToggle` | Cliente | Alternância de tema |
-| `LegacyScripts` | Cliente | Integração com JavaScript legado |
-| `Quiz1` e `Quiz2` (migração planejada) | Cliente | Consumo da API, interação e pontuação |
-| `route.js` | Servidor | Processamento das requisições da API |
+| `GET /api/situacoes` | `app/api/situacoes/route.js` | Lista de situações |
+| `GET /api/mensagens` | `app/api/mensagens/route.js` | Lista de mensagens |
+| `GET /api/golpes` | `app/api/golpes/route.js` | Lista de golpes |
 
-Os componentes cliente podem ter HTML pré-renderizado no servidor, mas seus eventos e efeitos executam no navegador.
+Cada rota importa seu JSON no servidor e responde usando `Response.json(dados)`, que envia status 200 e o cabeçalho `Content-Type: application/json`. Os arquivos JSON são fixos, incorporados ao build; não existe edição em tempo real nem API POST.
+
+## 3. Componentes de servidor e cliente
+
+| Componente | Ambiente | Responsabilidade |
+|---|---|---|
+| `RootLayout`, `Header`, `Footer`, `Card` | Servidor | Estrutura comum, layout e cartões |
+| `Navbar`, `ThemeToggle` | Cliente | Navegação ativa e tema |
+| `ListaGolpesAPI` | Cliente | Consulta `/api/golpes`, mostra cartões |
+| `CarregadorJogo` | Cliente | Consulta as APIs dos jogos com `fetch`, `useEffect` e `useState` |
+| `LegacyScripts` | Cliente | Carrega a lógica existente depois que o React recebeu os dados |
+| `app/api/*/route.js` | Servidor | Responde a consultas HTTP GET |
+| `app/golpes/[id]/page.jsx` | Servidor | Mostra um golpe por ID, ou página 404 |
+
+A lógica de interação e pontuação de `public/js/quiz1.js` e `quiz2.js` foi mantida. Os bancos antigos `public/js/dados/situacoes.js` e `mensagens.js` foram eliminados para evitar dados duplicados.
 
 ## 4. Como os componentes estão conectados?
 
-`RootLayout → Header → Navbar / ThemeToggle`
+`RootLayout → Header + Página + Footer`
 
-`RootLayout → Páginas → Card`
+`Header → Navbar + ThemeToggle`
 
-`RootLayout → Footer`
+`/quiz1 → CarregadorJogo → GET /api/situacoes → data/situacoes.json`
 
-**Após a implementação da API:**
+`/quiz2 → CarregadorJogo → GET /api/mensagens → data/mensagens.json`
 
-`Página do jogo → Componente React → fetch() → API Next.js → JSON`
+`CarregadorJogo → LegacyScripts → public/js/quiz1.js ou quiz2.js`
 
-A resposta retorna ao componente, que atualiza o estado e renderiza o conteúdo.
+`/golpes → ListaGolpesAPI → GET /api/golpes → data/golpes.json`
 
-## 5. Quais rotas existem?
+O React controla os estados de carregamento, sucesso e erro. Os scripts dos jogos geram cartões, verificam respostas e salvam pontos no `localStorage` somente após o carregamento.
 
-| Rota | Finalidade |
-|---|---|
-| `/` | Início |
-| `/sobre` | Sobre |
-| `/golpes` | Tipos de golpes |
-| `/dicas` | Prevenção |
-| `/quiz` | Seleção dos jogos |
-| `/quiz1` | Golpe ou Seguro |
-| `/quiz2` | Encontre os Sinais |
-| `/contato` | Contato |
+## 5. Rotas existentes
 
-**Novas rotas planejadas da API:** `/api/situacoes` e `/api/mensagens`.
+Páginas fixas: `/`, `/sobre`, `/golpes`, `/dicas`, `/quiz`, `/quiz1`, `/quiz2`, `/contato`.
 
-As oito rotas de páginas são caminhos fixos. Rotas dinâmicas parametrizadas ainda não foram implementadas.
+Rota dinâmica: `/golpes/[id]`, por exemplo `/golpes/1`. O ID é usado para localizar o item em `data/golpes.json`; IDs inexistentes retornam 404.
 
-## 6. Como serão divididas as responsabilidades?
+Rotas API: `/api/situacoes`, `/api/mensagens`, `/api/golpes`.
 
-**Back-end (Next.js):** disponibilizar dados JSON, processar requisições HTTP, definir respostas e tratar erros de servidor.
+## 6. Responsabilidades e persistência
 
-**Front-end (React):** executar `fetch()`, controlar estados com `useState()`, carregar dados com `useEffect()`, tratar erros na interface e permitir a interação com os jogos.
+- **Back-end:** importa os JSONs e devolve respostas HTTP por rotas GET.
+- **React:** busca os dados, guarda o estado e apresenta carregamento ou erro.
+- **JavaScript dos jogos:** sorteia itens carregados, avalia as respostas e atualiza o placar.
+- **Persistência:** `localStorage` armazena pontuação, recordes e conclusão das fases no próprio navegador.
 
-**Persistência:** a pontuação continuará no `localStorage`. Não será necessário banco de dados para o requisito de API com JSON fixo.
+Não há banco de dados, cadastro de usuários nem endpoints para gravar novas questões. Isso não é necessário para demonstrar a API JSON fixa do check-in.
 
+## 7. Testes automatizados e demonstração
+
+Na pasta `Projeto 2`, execute:
+
+```bash
+npm install
+npm test
+npm run build
+npm run test:smoke
+```
+
+`npm test` verifica estrutura, formatos dos JSONs, consistência dos sinais, ligação dos componentes React e preservação da pontuação. `test:smoke` inicia um servidor real de produção, consulta as três APIs via HTTP, compara seus retornos com os JSONs, acessa as páginas e verifica a rota dinâmica e a resposta 404.
+
+Para apresentar: abra `/api/situacoes`, `/api/mensagens` e `/api/golpes`, depois navegue para `/quiz1`, `/quiz2` e `/golpes`. A consulta dos jogos ocorre no carregamento da página, sem dados duplicados no JavaScript.
+
+**Apoio de IA:** o ChatGPT foi utilizado para auxiliar na migração e documentação. A implementação e suas decisões devem ser compreendidas e explicadas durante a apresentação.
