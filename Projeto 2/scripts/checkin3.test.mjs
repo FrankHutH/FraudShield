@@ -47,6 +47,6 @@ test("As oito páginas e imagens existem, mas os arquivos legados foram removido
 test("Testes HTTP usam o servidor real Next.js", () => {
   const smoke = read("scripts/smoke.mjs");
   assert.match(smoke, /next\/dist\/bin\/next/);
-  assert.match(smoke, /api\/situacoes/);
-  assert.match(smoke, /api\/mensagens/);
+  assert.ok(smoke.includes('["situacoes", "mensagens"]'));
+  assert.ok(smoke.includes('fetch(host + "/api/" + nome)'));
 });
