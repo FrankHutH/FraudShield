@@ -1,6 +1,8 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { ler } from "./pontuacao";
+
 export default function Placar() {
   const [estado, setEstado] = useState({
     pontos: 0,
@@ -24,12 +26,14 @@ export default function Placar() {
     };
   }, []);
   const progresso = estado.conclusoes.filter(Boolean).length * 50;
+
   function zerar() {
     for (const jogo of [1, 2])
       for (const campo of ["Pontos", "Recorde", "Concluido"])
         localStorage.removeItem("quiz" + jogo + campo);
     window.dispatchEvent(new Event("fraudshield:placar"));
   }
+
   return (
     <section className="painel placar-geral" aria-labelledby="titulo-placar">
       <h2 id="titulo-placar">Seu placar</h2>
