@@ -2,7 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-const read = (arquivo) => readFileSync(new URL("../" + arquivo, import.meta.url), "utf8");
+const read = (arquivo) =>
+  readFileSync(new URL("../" + arquivo, import.meta.url), "utf8");
 
 test("JSON contém exemplos completos com identificadores únicos", () => {
   const golpes = JSON.parse(read("data/golpes.json"));

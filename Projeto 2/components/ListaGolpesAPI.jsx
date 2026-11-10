@@ -9,7 +9,8 @@ export default function ListaGolpesAPI() {
   useEffect(() => {
     fetch("/api/golpes")
       .then((resposta) => {
-        if (!resposta.ok) throw new Error("Não foi possível carregar os exemplos.");
+        if (!resposta.ok)
+          throw new Error("Não foi possível carregar os exemplos.");
         return resposta.json();
       })
       .then((dados) => setGolpes(dados))

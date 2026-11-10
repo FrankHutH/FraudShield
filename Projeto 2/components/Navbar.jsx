@@ -9,7 +9,7 @@ const links = [
   { href: "/dicas", label: "Dicas" },
   { href: "/quiz", label: "Jogar" },
   { href: "/sobre", label: "Sobre" },
-  { href: "/contato", label: "Contato" }
+  { href: "/contato", label: "Contato" },
 ];
 
 export default function Navbar() {
@@ -18,9 +18,10 @@ export default function Navbar() {
   return (
     <nav className="menu-navegacao" aria-label="Navegação principal">
       {links.map(({ href, label }) => {
-        const ativo = href === "/quiz"
-          ? ["/quiz", "/quiz1", "/quiz2"].includes(caminho)
-          : caminho === href;
+        const ativo =
+          href === "/quiz"
+            ? ["/quiz", "/quiz1", "/quiz2"].includes(caminho)
+            : caminho === href;
 
         return (
           <a

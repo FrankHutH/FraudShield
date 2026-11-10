@@ -5,80 +5,120 @@ import ListaGolpesAPI from "../../components/ListaGolpesAPI";
 
 export const metadata = {
   title: "Golpes | FraudShield",
-  description: "Como funcionam os golpes com voz clonada, vídeo falso, mensagem falsa e falso atendimento."
+  description:
+    "Como funcionam os golpes com voz clonada, vídeo falso, mensagem falsa e falso atendimento.",
 };
 
 export default function Page() {
   return (
     <>
-<main>
-                  <header className="introducao">
-                      <h1>Como o golpe chega até você</h1>
-                      <p>Hoje dá para imitar a voz, o rosto e até o jeito de escrever de alguém. Veja os quatro truques mais usados e o que fazer em cada um.</p>
-                  </header>
+      <main>
+        <header className="introducao">
+          <h1>Como o golpe chega até você</h1>
+          <p>
+            Hoje dá para imitar a voz, o rosto e até o jeito de escrever de
+            alguém. Veja os quatro truques mais usados e o que fazer em cada um.
+          </p>
+        </header>
 
-                  <ul className="cartoes secao">
-                      <Card>
-                          <p className="etiqueta">Ligação ou áudio</p>
-                          <h3>Voz clonada</h3>
-                          <p className="fala">“Vó, sou eu. Bati o carro, não conta pra ninguém. Me manda um Pix?”</p>
+        <ul className="cartoes secao">
+          <Card>
+            <p className="etiqueta">Ligação ou áudio</p>
+            <h3>Voz clonada</h3>
+            <p className="fala">
+              “Vó, sou eu. Bati o carro, não conta pra ninguém. Me manda um
+              Pix?”
+            </p>
 
-                          <details>
-                              <summary>Como se proteger</summary>
-                              <p>Poucos segundos de um áudio seu nas redes bastam para copiar sua voz.</p>
-                              <p><strong>O que fazer:</strong> desligue e ligue de volta para o número que você já conhece.</p>
-                          </details>
-                      </Card>
+            <details>
+              <summary>Como se proteger</summary>
+              <p>
+                Poucos segundos de um áudio seu nas redes bastam para copiar sua
+                voz.
+              </p>
+              <p>
+                <strong>O que fazer:</strong> desligue e ligue de volta para o
+                número que você já conhece.
+              </p>
+            </details>
+          </Card>
 
-                      <Card>
-                          <p className="etiqueta">Vídeo ou foto</p>
-                          <h3>Famoso que nunca disse aquilo</h3>
-                          <p className="fala">Um apresentador conhecido “indicando” um investimento que dobra seu dinheiro.</p>
+          <Card>
+            <p className="etiqueta">Vídeo ou foto</p>
+            <h3>Famoso que nunca disse aquilo</h3>
+            <p className="fala">
+              Um apresentador conhecido “indicando” um investimento que dobra
+              seu dinheiro.
+            </p>
 
-                          <details>
-                              <summary>Como se proteger</summary>
-                              <p>Rosto e voz podem ser montados por computador. O vídeo pode parecer perfeito.</p>
-                              <p><strong>O que fazer:</strong> procure a mesma notícia no perfil oficial da pessoa ou num jornal.</p>
-                          </details>
-                      </Card>
+            <details>
+              <summary>Como se proteger</summary>
+              <p>
+                Rosto e voz podem ser montados por computador. O vídeo pode
+                parecer perfeito.
+              </p>
+              <p>
+                <strong>O que fazer:</strong> procure a mesma notícia no perfil
+                oficial da pessoa ou num jornal.
+              </p>
+            </details>
+          </Card>
 
-                      <Card>
-                          <p className="etiqueta">WhatsApp ou SMS</p>
-                          <h3>Mensagem falsa</h3>
-                          <p className="fala">“Sua conta será bloqueada hoje. Clique no link para regularizar.”</p>
+          <Card>
+            <p className="etiqueta">WhatsApp ou SMS</p>
+            <h3>Mensagem falsa</h3>
+            <p className="fala">
+              “Sua conta será bloqueada hoje. Clique no link para regularizar.”
+            </p>
 
-                          <details>
-                              <summary>Como se proteger</summary>
-                              <p>Imita empresas de verdade, com logo e tudo. O truque é a ameaça com prazo.</p>
-                              <p><strong>O que fazer:</strong> não clique. Abra o aplicativo oficial por conta própria.</p>
-                          </details>
-                      </Card>
+            <details>
+              <summary>Como se proteger</summary>
+              <p>
+                Imita empresas de verdade, com logo e tudo. O truque é a ameaça
+                com prazo.
+              </p>
+              <p>
+                <strong>O que fazer:</strong> não clique. Abra o aplicativo
+                oficial por conta própria.
+              </p>
+            </details>
+          </Card>
 
-                      <Card>
-                          <p className="etiqueta">Telefone</p>
-                          <h3>Falso atendente</h3>
-                          <p className="fala">“Aqui é da central do banco. Vou mandar um código, pode me falar qual chegou?”</p>
+          <Card>
+            <p className="etiqueta">Telefone</p>
+            <h3>Falso atendente</h3>
+            <p className="fala">
+              “Aqui é da central do banco. Vou mandar um código, pode me falar
+              qual chegou?”
+            </p>
 
-                          <details>
-                              <summary>Como se proteger</summary>
-                              <p>A pessoa sabe seu nome e parte dos seus dados, e fala como funcionário.</p>
-                              <p><strong>O que fazer:</strong> desligue e ligue para o número que está atrás do seu cartão.</p>
-                          </details>
-                      </Card>
-                  </ul>
+            <details>
+              <summary>Como se proteger</summary>
+              <p>
+                A pessoa sabe seu nome e parte dos seus dados, e fala como
+                funcionário.
+              </p>
+              <p>
+                <strong>O que fazer:</strong> desligue e ligue para o número que
+                está atrás do seu cartão.
+              </p>
+            </details>
+          </Card>
+        </ul>
 
-                  <ListaGolpesAPI />
+        <ListaGolpesAPI />
 
-                  <aside className="chamada" aria-labelledby="titulo-chamada">
-                      <header>
-                          <h2 id="titulo-chamada">Acha que pegaria esses?</h2>
-                          <p>Teste no jogo “Golpe ou seguro?”.</p>
-                      </header>
+        <aside className="chamada" aria-labelledby="titulo-chamada">
+          <header>
+            <h2 id="titulo-chamada">Acha que pegaria esses?</h2>
+            <p>Teste no jogo “Golpe ou seguro?”.</p>
+          </header>
 
-                      <a className="botao" href="/quiz1">▶ Testar</a>
-                  </aside>
-              </main>
-
-</>
+          <a className="botao" href="/quiz1">
+            ▶ Testar
+          </a>
+        </aside>
+      </main>
+    </>
   );
 }
