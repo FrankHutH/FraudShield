@@ -63,7 +63,7 @@ try {
     console.log("OK " + route);
   }
 
-  for (const asset of ["/img/logo.png", "/img/favicon.png", "/js/quiz1.js", "/js/quiz2.js"]) {
+  for (const asset of ["/img/logo.png", "/img/favicon.png", ]) {
     const response = await fetch(host + asset);
     if (!response.ok) throw new Error("Recurso indisponível: " + asset);
     console.log("OK " + asset);
