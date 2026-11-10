@@ -1,6 +1,6 @@
 // Murilo Lobato - RA: 10752958
 
-import LegacyScripts from "../../components/LegacyScripts";
+import CarregadorJogo from "../../components/CarregadorJogo";
 import "../../styles/pages/quiz1.css";
 
 export const metadata = {
@@ -19,6 +19,12 @@ export default function Page() {
                       <h1>Golpe ou seguro?</h1>
                       <p>Toque numa situação e escolha a caixa certa. Também dá para arrastar o cartão até a caixa.</p>
                   </header>
+
+                  <CarregadorJogo
+                      url="/api/situacoes"
+                      nomeBanco="fraudshieldSituacoes"
+                      scripts={["/js/dados/feedback.js", "/js/progresso.js", "/js/feedback.js", "/js/quiz1.js"]}
+                  />
 
                   <section className="placar-jogo" aria-label="Placar">
                       <p id="progressoJogo1" role="status"></p>
@@ -56,7 +62,7 @@ export default function Page() {
                   <p className="aviso">Os exemplos são para treino. Uma atitude segura diminui o risco, mas não garante que todo contato seja legítimo.</p>
               </main>
 
-<LegacyScripts scripts={["/js/dados/situacoes.js","/js/dados/feedback.js","/js/progresso.js","/js/feedback.js","/js/quiz1.js"]} />
+
     </>
   );
 }
