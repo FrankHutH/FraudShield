@@ -1,6 +1,7 @@
 // Murilo Lobato - RA: 10752958
 
 export default function Footer() {
+
   return (
     <footer className="rodape-principal">
       <p>
