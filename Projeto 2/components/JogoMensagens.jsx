@@ -6,6 +6,26 @@ import { ler, registrar, sortear } from "./pontuacao";
 const normalizar = (palavra) =>
   palavra.toLocaleLowerCase("pt-BR").replace(/[.,!?;:]/g, "");
 
+function classePalavra(verificada, sinal, marcada) {
+  if (!verificada) {
+    if (marcada) return "palavra-selecionada";
+    return "";
+  }
+
+  if (sinal && marcada) return "palavra-correta";
+  if (sinal) return "palavra-perdida";
+  if (marcada) return "palavra-incorreta";
+  return "";
+}
+
+function simboloPalavra(verificada, sinal, marcada) {
+  if (!verificada) return "";
+  if (sinal && marcada) return "✓ ";
+  if (sinal) return "! ";
+  if (marcada) return "✕ ";
+  return "";
+}
+
 export default function JogoMensagens({ dados }) {
   const [rodada, setRodada] = useState(() => sortear(dados));
   const [numero, setNumero] = useState(1);
@@ -83,23 +103,15 @@ export default function JogoMensagens({ dados }) {
         <p className="mensagem-jogo">
           {palavras.map((palavra, i) => {
             const sinal = sinais.includes(normalizar(palavra));
-            const classe = verificada
-              ? sinal
-                ? marcadas.includes(i)
-                  ? "palavra-correta"
-                  : "palavra-perdida"
-                : marcadas.includes(i)
-                  ? "palavra-incorreta"
-                  : ""
-              : marcadas.includes(i)
-                ? "palavra-selecionada"
-                : "";
+            const marcada = marcadas.includes(i);
+            const classe = classePalavra(verificada, sinal, marcada);
+
             return (
               <span key={i}>
                 <button
                   type="button"
                   className={"palavra-mensagem " + classe}
-                  aria-pressed={marcadas.includes(i)}
+                  aria-pressed={marcada}
                   disabled={verificada || encerrado}
                   onClick={() =>
                     setMarcadas((atuais) =>
@@ -109,13 +121,7 @@ export default function JogoMensagens({ dados }) {
                     )
                   }
                 >
-                  {verificada && sinal
-                    ? marcadas.includes(i)
-                      ? "✓ "
-                      : "! "
-                    : verificada && marcadas.includes(i)
-                      ? "✕ "
-                      : ""}
+                  {simboloPalavra(verificada, sinal, marcada)}
                   {palavra}
                 </button>{" "}
               </span>
